@@ -1,32 +1,26 @@
 <template>
   <ul class="list">
-    <li :class="['list__item', {'list__item--selected': isSelected(comment.id)}]" v-for="comment in comments"
-        :key="comment.id" @click.capture="selectComment(comment)">
+    <li class="list__item" v-for="comment in defaultComments" :key="comment.id" @click="onCommentClick(comment)">
       <span class="list__item-text">{{comment.text}}</span>
-      <v-icon-button class="item__remove-btn" @click="deleteComment(comment.id)" icon="minus.svg"/>
     </li>
   </ul>
-
 </template>
 
 
 <script>
   import {mapState, mapActions} from "vuex";
-  import VIconButton from "./VIconButton";
 
   export default {
-    name: "CommentList",
+    name: "DefaultCommentList",
     computed: {
-      ...mapState(["comments", "editingComment"])
+      ...mapState(["defaultComments"])
     },
     methods: {
-      isSelected(commentId) {
-        return this.editingComment.id === commentId;
-      },
-      ...mapActions(["selectComment", "deleteComment"])
-    },
-    components: {
-      VIconButton
+      ...mapActions(["addDefaultComment"]),
+      onCommentClick(comment) {
+        this.addDefaultComment(comment);
+        this.$modal.hide("hello-world");
+      }
     }
   };
 </script>
@@ -35,6 +29,7 @@
   .list {
     list-style-type: none;
     padding-left: 0;
+    overflow: auto;
   }
 
   .list__item {

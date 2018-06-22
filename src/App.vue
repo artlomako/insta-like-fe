@@ -31,4 +31,10 @@ body {
   /* -webkit-font-smoothing: antialiased; */
   color: #2c3e50;
 }
+
+.v--modal-box.v--modal {
+  background-color: #fcfeeb;
+}
+
+
 </style>

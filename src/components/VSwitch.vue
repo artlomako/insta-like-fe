@@ -1,31 +1,40 @@
 <template>
-  <img :src="icon" :class="[{'container--disabled': !enabled}, 'container']" @click="$emit('click')" />
+  <img :src="icon" :class="[{'container--disabled': !enabled}, 'container', {'container--big' : primary}]" @click="$emit('click')"/>
 </template>
 
 <script>
-export default {
-  name: "VSwitch",
-  props: {
-    icon: {
-      type: String,
-      required: true
-    },
-    enabled: {
-      type: Boolean,
-      required: true,
-      default: false
+  export default {
+    name: "VSwitch",
+    props: {
+      icon: {
+        type: String,
+        required: true
+      },
+      enabled: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
+      primary: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.container {
-  height: 2.5rem;
-  transition: 0.5s;
-}
+  .container {
+    height: 2.3rem;
+    transition: 0.5s;
+  }
 
-.container--disabled {
-  opacity: 0.5;
-}
+  .container--big {
+    height: 3.6rem;
+  }
+
+  .container--disabled {
+    opacity: 0.5;
+  }
 </style>

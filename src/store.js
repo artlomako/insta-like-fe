@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {apiFetchDefaultComments, apiStart} from "./api.js";
 
 Vue.use(Vuex);
+
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== "production",
@@ -13,7 +15,9 @@ export default new Vuex.Store({
     shouldLike: true,
     shouldComment: true,
     comments: [],
-    photoUrl: ""
+    photoUrl: "",
+    defaultComments: [],
+    error: undefined
   },
   mutations: {
     switchShouldLike(state) {
@@ -35,20 +39,32 @@ export default new Vuex.Store({
       state.comments = state.comments.filter(c => c.id !== id);
     },
     resetEditingComment(state) {
-      state.editingComment = { id: -1, text: "" };
+      state.editingComment = {id: -1, text: ""};
     },
     setEditingComment(state, comment) {
-      state.editingComment = { ...comment };
+      state.editingComment = {...comment};
     },
     submitEditingComment(state) {
       state.comments = state.comments
-        .map(
-          c =>
-            c.id === state.editingComment.id ? { ...state.editingComment } : c
-        )
+          .map(
+              c =>
+                  c.id === state.editingComment.id ? {...state.editingComment} : c
+          )
+    },
+    setDefaultComments(state, comments) {
+      state.defaultComments = comments.map((comm, idx) => ({id: idx, text: comm}));
+    },
+    setError(state, error) {
+      state.error = error;
+    },
+    resetError(state) {
+      state.error = undefined;
     }
   },
   actions: {
+    addDefaultComment(context, comment) {
+      context.commit("addComment", {...comment, id: context.state.comments.length});
+    },
     submitComment(context) {
       if (context.state.editingComment.id == -1) {
         context.commit("addComment", {
@@ -72,6 +88,20 @@ export default new Vuex.Store({
         context.commit("resetEditingComment");
       }
       context.commit("deleteComment", id);
+    },
+    fetchDefaultComments(context) {
+      apiFetchDefaultComments().then(response => response.json())
+          .then(comm => context.commit("setDefaultComments", comm));
+    },
+    start(context) {
+      if (context.state.photoUrl && context.state.photoUrl.length > 0) {
+        apiStart(context.state.photoUrl, context.state.shouldLike, context.state.comments.map(c => c.text))
+            .then(r => r.text())
+            .then(r => {
+              context.commit("setError", r);
+            });
+      }
     }
+
   }
 });
