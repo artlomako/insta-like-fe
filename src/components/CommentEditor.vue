@@ -17,7 +17,7 @@
     <modal name="state-panel">
       <state-panel/>
     </modal>
-    <v-dialog @before-closed="resetError"/>
+    <v-dialog @before-closed="setStatus('STOP')"/>
   </div>
 </template>
 
@@ -25,12 +25,12 @@
   import {mapMutations, mapActions, mapState} from "vuex";
   import VIconButton from "./VIconButton";
   import DefaultCommentList from "./DefaultCommentList";
-  import StatePanel from "./StatePanel";
 
   export default {
     name: "CommentEditor",
     computed: {
-      ...mapState(["editingComment", "error"]),
+      ...mapState("settings", ["editingComment"]),
+      ...mapState(["status"]),
       submitButtonIcon() {
         return this.editingComment.id === -1 ? "plus" : "check";
       }
@@ -45,14 +45,15 @@
         this.fetchDefaultComments();
         this.$modal.show('hello-world');
       },
-      ...mapMutations(["changeEditingCommentText", "resetError"]),
-      ...mapActions(["submitComment", "fetchDefaultComments"])
+      ...mapMutations("settings", ["changeEditingCommentText"]),
+      ...mapMutations(["setStatus"]),
+      ...mapActions("settings", ["submitComment", "fetchDefaultComments"])
     },
     watch: {
-      error(e) {
-        if (e) {
+      status(s) {
+        if (s === "UNAUTHORIZED") {
           this.$modal.show('dialog', {
-            text: 'Użytkownik który udostępnił zdjęcie nie ma dostepu do serwisu.',
+            text: 'Użytkownik, który udostępnił zdjęcie nie ma dostępu do serwisu.',
             buttons: [
               {
                 title: 'OK',
@@ -64,7 +65,6 @@
       }
     },
     components: {
-      StatePanel,
       VIconButton,
       DefaultCommentList
     }

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <photo-url-input :value="photoUrl" @change="changePhotoUrl"/>
-
+    <photo-url-input/>
     <div class="switches">
       <v-switch icon="heart.svg" :enabled="shouldLike" @click="switchShouldLike"/>
       <v-switch icon="start.svg" primary @click="onClickStart"/>
@@ -19,33 +18,25 @@
   import PhotoUrlInput from "@/components/PhotoUrlInput";
   import VSwitch from "@/components/VSwitch";
   import CommentsControl from "@/components/CommentsControl";
-  import StatePanel from "@/components/StatePanel";
 
   export default {
     name: "home",
     computed: {
-      ...mapState(["photoUrl", "shouldLike", "shouldComment"])
+      ...mapState("settings", ["shouldLike", "shouldComment"])
     },
     components: {
       PhotoUrlInput,
       VSwitch,
-      CommentsControl,
-      StatePanel
+      CommentsControl
     },
     methods: {
-      ...mapMutations([
-        "switchShouldLike",
-        "switchShouldComment",
-        "changePhotoUrl"
-      ]),
+      ...mapMutations("settings", ["switchShouldLike", "switchShouldComment"]),
       ...mapActions(["start"]),
       onClickStart() {
         this.start();
       }
     }
-
   }
-  ;
 </script>
 
 <style>

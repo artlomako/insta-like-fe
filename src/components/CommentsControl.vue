@@ -1,7 +1,7 @@
 <template>
   <div>
-    <comment-editor />
-    <comment-list />
+    <comment-editor/>
+    <comment-list/>
   </div>
 </template>
 

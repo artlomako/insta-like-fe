@@ -1,33 +1,24 @@
 <template>
-  <input :class="['url-input', {'url-input--error': !valid}]" :value="value" @keyup="onChange"
+  <input :class="['url-input', {'url-input--error': !photoUrlValid}]" :value="photoUrl" @keyup="onChange"
          placeholder="URL do zdjęcia"/>
 </template>
 
 
 <script>
+  import {mapGetters, mapState, mapMutations} from "vuex";
+
   export default {
     name: "PhotoUrlInput",
-    props: {
-      value: {
-        type: String,
-        required: true
-      }
-    },
     computed: {
-      valid() {
-        return (
-            this.value.trim().length === 0 ||
-            /^(https?:\/\/)?(www\.)?instagram\.com\/.+/.test(
-                this.value.trim().toLowerCase()
-            )
-        );
-      }
+      ...mapGetters("settings", ["photoUrlValid"]),
+      ...mapState("settings", ["photoUrl"])
     },
     methods: {
       onChange(e) {
-        const newValue = e.target.value;
-        this.$emit("change", newValue);
-      }
+        const newUrl = e.target.value;
+        this.changePhotoUrl(newUrl);
+      },
+      ...mapMutations("settings", ["changePhotoUrl"])
     }
   };
 </script>
