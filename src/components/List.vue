@@ -2,7 +2,7 @@
   <ul class="list">
     <li :class="['list__item', {'list__item--selected': isSelected && isSelected(item)}]" v-for="item in items"
         :key="item.id" @click.self="onSelect(item)">
-      <span class="list__item-text">{{item.text}}</span>
+      <span class="list__item-text" @click.self="onSelect(item)">{{item.text}}</span>
       <v-icon-button v-if="typeof onDelete !== 'undefined'" class="item__remove-btn" @click="onDelete(item)"
                      icon="minus.svg"/>
     </li>

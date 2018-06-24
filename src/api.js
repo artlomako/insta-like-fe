@@ -1,9 +1,11 @@
-const host = process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
-
-export const apiFetchDefaultComments = () => fetch(host + "/default-comments");
+let root = "/api";
+if (process.env.NODE_ENV !== "production") {
+  root = "http://localhost:3000" + root;
+}
+export const apiFetchDefaultComments = () => fetch(root + "/default-comments");
 
 export const apiStart = (photoUrl, shouldLike, comments) => (
-    fetch(host + "/start", {
+    fetch(root + "/start", {
       method: "POST",
       headers: {
         'content-type': 'application/json'
