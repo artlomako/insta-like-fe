@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import settings from "./settingsModule";
 import comments from "./commentsModule";
 import service from "./serviceModule";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     settings,
     comments,
     service
-  }
+  },
+  plugins: [createPersistedState()]
 })
 
