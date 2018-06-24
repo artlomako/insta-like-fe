@@ -5,32 +5,24 @@
               @change="changeEditingCommentText($event.target.value)" placeholder="Treść komentarza..."></textarea>
       <div class="editor__buttons">
         <v-icon-button @click="onSubmit" :icon="`${submitButtonIcon}.svg`" class="editor__button"/>
-        <v-icon-button @click="openModal" icon="search.svg" class="editor__button"/>
+        <v-icon-button @click="showDefaultComments" icon="search.svg" class="editor__button"/>
       </div>
     </div>
-    <modal name="hello-world">
-      <div class="cl">
-        <p class="default-comment-list__title">Wybierz komentarz z listy</p>
-        <default-comment-list/>
-      </div>
-    </modal>
-    <modal name="state-panel">
-      <state-panel/>
-    </modal>
-    <v-dialog @before-closed="setStatus('STOP')"/>
+    <default-comment-list/>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapActions, mapState} from "vuex";
   import VIconButton from "./VIconButton";
   import DefaultCommentList from "./DefaultCommentList";
 
+  import {createNamespacedHelpers} from "vuex";
+
+  const {mapState, mapActions, mapMutations} = createNamespacedHelpers("comments");
   export default {
     name: "CommentEditor",
     computed: {
-      ...mapState("settings", ["editingComment"]),
-      ...mapState(["status"]),
+      ...mapState(["editingComment"]),
       submitButtonIcon() {
         return this.editingComment.id === -1 ? "plus" : "check";
       }
@@ -38,31 +30,14 @@
     methods: {
       onSubmit() {
         if (this.editingComment.text.trim().length > 0) {
-          this.submitComment();
+          this.submitEditingComment();
         }
       },
-      openModal() {
-        this.fetchDefaultComments();
-        this.$modal.show('hello-world');
+      showDefaultComments() {
+        this.$modal.show("default-comments");
       },
-      ...mapMutations("settings", ["changeEditingCommentText"]),
-      ...mapMutations(["setStatus"]),
-      ...mapActions("settings", ["submitComment", "fetchDefaultComments"])
-    },
-    watch: {
-      status(s) {
-        if (s === "UNAUTHORIZED") {
-          this.$modal.show('dialog', {
-            text: 'Użytkownik, który udostępnił zdjęcie nie ma dostępu do serwisu.',
-            buttons: [
-              {
-                title: 'OK',
-                default: true
-              }
-            ]
-          });
-        }
-      }
+      ...mapMutations(["changeEditingCommentText"]),
+      ...mapActions(["submitEditingComment"])
     },
     components: {
       VIconButton,
@@ -99,17 +74,5 @@
     height: 1.4rem;
   }
 
-  .default-comment-list__title {
-    margin: 0.5rem 0 0 0.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .cl {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    height: 100%;
-  }
 
 </style>

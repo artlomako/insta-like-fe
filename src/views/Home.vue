@@ -9,6 +9,7 @@
     <transition name="fade">
       <comments-control class="comments" v-if="shouldComment"/>
     </transition>
+    <error-dialog/>
   </div>
 
 </template>
@@ -18,6 +19,7 @@
   import PhotoUrlInput from "@/components/PhotoUrlInput";
   import VSwitch from "@/components/VSwitch";
   import CommentsControl from "@/components/CommentsControl";
+  import ErrorDialog from "@/components/ErrorDialog";
 
   export default {
     name: "home",
@@ -27,11 +29,12 @@
     components: {
       PhotoUrlInput,
       VSwitch,
-      CommentsControl
+      CommentsControl,
+      ErrorDialog
     },
     methods: {
       ...mapMutations("settings", ["switchShouldLike", "switchShouldComment"]),
-      ...mapActions(["start"]),
+      ...mapActions("service", ["start"]),
       onClickStart() {
         this.start();
       }

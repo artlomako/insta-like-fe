@@ -1,7 +1,7 @@
 <template>
   <ul class="list">
     <li :class="['list__item', {'list__item--selected': isSelected && isSelected(item)}]" v-for="item in items"
-        :key="item.id" @click.capture="onSelect(item)">
+        :key="item.id" @click.self="onSelect(item)">
       <span class="list__item-text">{{item.text}}</span>
       <v-icon-button v-if="typeof onDelete !== 'undefined'" class="item__remove-btn" @click="onDelete(item)"
                      icon="minus.svg"/>
@@ -44,6 +44,8 @@
   .list {
     list-style-type: none;
     padding-left: 0;
+    height: 100%;
+    overflow: auto;
   }
 
   .list__item {

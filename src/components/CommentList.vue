@@ -4,21 +4,23 @@
 
 
 <script>
-  import {mapState, mapGetters, mapActions} from "vuex";
   import VIconButton from "./VIconButton";
   import List from "./List";
+  import {createNamespacedHelpers} from "vuex";
+
+  const {mapGetters, mapState, mapActions} = createNamespacedHelpers("comments");
 
   export default {
     name: "CommentList",
     computed: {
-      ...mapGetters("settings", ["isCommentEditing"]),
-      ...mapState("settings", ["editingComment", "comments"])
+      ...mapGetters(["isCommentEditing"]),
+      ...mapState(["editingComment", "comments"])
     },
     methods: {
       isSelected(commentId) {
         return this.editingComment.id === commentId;
       },
-      ...mapActions("settings", ["selectComment", "deleteComment"])
+      ...mapActions(["selectComment", "deleteComment"])
     },
     components: {
       VIconButton,
@@ -28,5 +30,4 @@
 </script>
 
 <style scoped>
-
 </style>
