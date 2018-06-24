@@ -23,6 +23,9 @@
           case "API_UNAVAILABLE":
             errorMessage = "Brak połączenia z serwisem";
             break;
+          case "INVALID_PHOTO_URL":
+            errorMessage = "Niepoprawny link do zdjęcia";
+            break;
           case "ERROR":
             errorMessage = "Wystąpił nieoczekiwany błąd";
             break;
