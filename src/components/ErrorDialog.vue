@@ -26,6 +26,9 @@
           case "INVALID_PHOTO_URL":
             errorMessage = "Niepoprawny link do zdjęcia";
             break;
+          case "NO_OPTION_CHOSEN":
+            errorMessage = "Wybierz przynajmniej jedną opcję: <strong>Like</strong> lub <strong>Komentarz</strong>";
+            break;
           case "ERROR":
             errorMessage = "Wystąpił nieoczekiwany błąd";
             break;

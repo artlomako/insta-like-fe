@@ -30,6 +30,10 @@ export default {
         commit("setStatus", "INVALID_PHOTO_URL");
         return;
       }
+      if(!settings.shouldComment && !settings.shouldLike){
+        commit("setStatus", "NO_OPTION_CHOSEN");
+        return;
+      }
       apiStart(settings.photoUrl, settings.shouldLike, context.rootState.comments.comments.map(c => c.text))
           .then(r => {
             switch (r.status) {

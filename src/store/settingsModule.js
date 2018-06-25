@@ -2,8 +2,8 @@ export default {
   namespaced: true,
   state: {
     photoUrl: "",
-    shouldLike: true,
-    shouldComment: true
+    shouldLike: false,
+    shouldComment: false
   },
   getters: {
     photoUrlValid({photoUrl}) {
