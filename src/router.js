@@ -13,9 +13,10 @@ export default new Router({
       component: Home
     },
     {
-      path: "/about",
+      path: "/admin",
       name: "about",
-      component: About
+      component: About,
+      meta: { requireAuth: true }
     }
   ]
 });

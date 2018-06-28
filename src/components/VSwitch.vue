@@ -31,7 +31,7 @@
   }
 
   .container--big {
-    height: 3.6rem;
+    height: 4.3rem;
   }
 
   .container--disabled {

@@ -8,7 +8,7 @@ export default {
   namespaced: true,
   state: {
     status: {
-      value: "STOP",
+      value: "WAITING",
       lastUpdated: Date.now()
     },
   },
@@ -24,30 +24,50 @@ export default {
   },
   actions: {
     start(context) {
+      const setStatus = (status) => commit("setStatus", status);
       const settings = context.rootState.settings;
       const commit = context.commit;
       if (settings.photoUrl.length === 0 || !context.rootGetters["settings/photoUrlValid"]) {
-        commit("setStatus", "INVALID_PHOTO_URL");
+        setStatus("INVALID_PHOTO_URL");
         return;
       }
-      if(!settings.shouldComment && !settings.shouldLike){
-        commit("setStatus", "NO_OPTION_CHOSEN");
+      if (!settings.likes.enabled && !settings.comments.enabled) {
+        setStatus("NO_OPTION_CHOSEN");
         return;
       }
-      apiStart(settings.photoUrl, settings.shouldLike, context.rootState.comments.comments.map(c => c.text))
+      const body = {
+        photoUrl: settings.photoUrl
+      };
+      if (settings.likes.enabled) {
+        body.likes = settings.likes.number;
+      }
+      if (settings.comments.enabled) {
+        body.comments = {
+          number: settings.comments.number,
+          items: context.rootState.comments.comments.map(c => c.text)
+        };
+      }
+
+      apiStart(body)
           .then(r => {
             switch (r.status) {
-              case 200:
-                commit("setStatus", "RUNNING");
+              case 202:
+                setStatus("OK");
                 break;
               case 403:
-                commit("setStatus", "UNAUTHORIZED");
+                setStatus("UNAUTHORIZED");
+                break;
+              case 409:
+                setStatus("ALREADY_PROCESSING");
+                break;
+              case 422:
+                setStatus("INVALID_PHOTO_URL");
                 break;
               case 503:
-                commit("setStatus", "API_UNAVAILABLE");
+                setStatus("API_UNAVAILABLE");
                 break;
               default:
-                commit("setStatus", "ERROR");
+                setStatus("ERROR");
             }
           });
     }

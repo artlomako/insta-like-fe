@@ -2,41 +2,54 @@
   <div class="home">
     <photo-url-input/>
     <div class="switches">
-      <v-switch icon="heart.svg" :enabled="shouldLike" @click="switchShouldLike"/>
+      <likes-control/>
       <v-switch icon="start.svg" primary @click="onClickStart"/>
-      <v-switch icon="comment.svg" :enabled="shouldComment" @click="switchShouldComment"/>
+      <v-switch icon="info.svg" primary @click="showStatusModal"/>
+      <comments-ctrl/>
     </div>
     <transition name="fade">
-      <comments-control class="comments" v-if="shouldComment"/>
+      <comments-control class="comments" v-if="comments.enabled"/>
     </transition>
+    <status-modal/>
     <error-dialog/>
   </div>
 
 </template>
 
 <script>
-  import {mapMutations, mapState, mapActions} from "vuex";
+  import {mapActions, mapState} from "vuex";
   import PhotoUrlInput from "@/components/PhotoUrlInput";
   import VSwitch from "@/components/VSwitch";
   import CommentsControl from "@/components/CommentsControl";
   import ErrorDialog from "@/components/ErrorDialog";
+  import StatusModal from "@/components/StatusModal";
+  import LikesControl from "@/components/LikesControl";
+  import CommentsCtrl from "@/components/CommentsCtrl";
 
   export default {
     name: "home",
-    computed: {
-      ...mapState("settings", ["shouldLike", "shouldComment"])
+    data() {
+      return {val: 1};
     },
     components: {
       PhotoUrlInput,
       VSwitch,
       CommentsControl,
-      ErrorDialog
+      ErrorDialog,
+      LikesControl,
+      CommentsCtrl,
+      StatusModal
+    },
+    computed: {
+      ...mapState("settings", ["comments"])
     },
     methods: {
-      ...mapMutations("settings", ["switchShouldLike", "switchShouldComment"]),
       ...mapActions("service", ["start"]),
       onClickStart() {
         this.start();
+      },
+      showStatusModal() {
+        this.$modal.show("processes");
       }
     }
   }
@@ -46,7 +59,7 @@
   .home {
     display: flex;
     flex-direction: column;
-    padding: 2rem 25% 0 25%;
+    padding: 2rem 17% 0 17%;
     align-items: center;
   }
 
@@ -71,5 +84,9 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
   {
     opacity: 0;
+  }
+
+  .btn-clazz {
+
   }
 </style>

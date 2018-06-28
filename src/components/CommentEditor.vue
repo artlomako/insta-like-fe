@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="editor">
-    <textarea class="editor__text-area" :value="editingComment.text"
-              @change="changeEditingCommentText($event.target.value)" placeholder="Treść komentarza..."></textarea>
+      <input class="editor__text-area" :value="editingComment.text"
+             @change="changeEditingCommentText($event.target.value)" placeholder="Treść komentarza..."
+             @keyup.enter="onSubmit"></input>
       <div class="editor__buttons">
         <v-icon-button @click="onSubmit" :icon="`${submitButtonIcon}.svg`" class="editor__button"/>
         <v-icon-button @click="showDefaultComments" icon="search.svg" class="editor__button"/>
@@ -55,7 +56,7 @@
 
   .editor__text-area {
     resize: none;
-    height: 3rem;
+    height: 2rem;
     border: none;
     background-color: #d1d3c0;
     font-size: 1rem;

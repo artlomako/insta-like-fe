@@ -2,8 +2,14 @@ export default {
   namespaced: true,
   state: {
     photoUrl: "",
-    shouldLike: false,
-    shouldComment: false
+    likes: {
+      number: 20,
+      enabled: false
+    },
+    comments: {
+      enabled: false,
+      number: 10
+    }
   },
   getters: {
     photoUrlValid({photoUrl}) {
@@ -19,11 +25,17 @@ export default {
     changePhotoUrl(state, newUrl) {
       state.photoUrl = newUrl;
     },
-    switchShouldLike(state) {
-      state.shouldLike = !state.shouldLike;
+    switchLikes({likes}) {
+      likes.enabled = !likes.enabled;
     },
-    switchShouldComment(state) {
-      state.shouldComment = !state.shouldComment;
+    changeNumberOfLikes({likes}, likesNumber) {
+      likes.number = likesNumber;
     },
+    switchComments({comments}) {
+      comments.enabled = !comments.enabled;
+    },
+    changeNumberOfComments({comments}, commentsNumber) {
+      comments.number = commentsNumber;
+    }
   }
 };

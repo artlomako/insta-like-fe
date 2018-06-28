@@ -4,12 +4,17 @@ if (process.env.NODE_ENV !== "production") {
 }
 export const apiFetchDefaultComments = () => fetch(root + "/default-comments");
 
-export const apiStart = (photoUrl, shouldLike, comments) => (
+export const apiStart = (body) => (
     fetch(root + "/start", {
       method: "POST",
+      credentials: 'include',
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({photoUrl, shouldLike, comments})
+      body: JSON.stringify(body)
     })
+);
+
+export const apiStatus = () => (
+    fetch(root + "/status", {credentials: 'include'}).then(r => r.json())
 );
