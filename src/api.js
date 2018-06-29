@@ -7,7 +7,7 @@ export const apiFetchDefaultComments = () => fetch(root + "/default-comments");
 export const apiStart = (body) => (
     fetch(root + "/start", {
       method: "POST",
-      credentials: 'include',
+      credentials: "same-origin",
       headers: {
         'content-type': 'application/json'
       },
@@ -16,5 +16,5 @@ export const apiStart = (body) => (
 );
 
 export const apiStatus = () => (
-    fetch(root + "/status", {credentials: 'include'}).then(r => r.json())
+    fetch(root + "/status", {credentials: 'same-origin'}).then(r => r.json())
 );

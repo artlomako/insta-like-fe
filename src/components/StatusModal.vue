@@ -9,11 +9,13 @@
             {{errors(process)}}</p>
         </li>
       </ul>
+      <v-switch class="refresh-btn" icon="refresh.svg" @click="fetchData"/>
     </div>
   </modal>
 </template>
 
 <script>
+  import VSwitch from "./VSwitch";
   import {apiStatus} from "../api";
   import {createNamespacedHelpers} from "vuex";
 
@@ -73,6 +75,9 @@
           this.processes = res
         })
       }
+    },
+    components: {
+      VSwitch
     }
   }
 </script>
@@ -123,5 +128,9 @@
     flex: 1 1 auto;
     flex-direction: column;
     height: 100%;
+  }
+
+  .refresh-btn{
+    margin:0.5rem;
   }
 </style>
