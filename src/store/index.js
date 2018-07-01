@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import settings from "./settingsModule";
 import comments from "./commentsModule";
+import defaultComments from "./defaultCommentsModule";
+import users from "./usersModule";
 import service from "./serviceModule";
 import createPersistedState from "vuex-persistedstate";
 
@@ -12,7 +14,9 @@ export default new Vuex.Store({
   modules: {
     settings,
     comments,
-    service
+    service,
+    defaultComments,
+    users
   },
   plugins: [createPersistedState()]
 })

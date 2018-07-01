@@ -1,3 +1,5 @@
+import {apiFetchDefaultComments, apiSubmitDefaultComments} from "../api";
+
 export default {
   namespaced: true,
   state: {
@@ -6,7 +8,8 @@ export default {
       id: undefined,
       text: ""
     },
-    nextCommentId: 0
+    nextCommentId: 0,
+    adminPassword: ""
   },
   getters: {
     isCommentEditing: ({editingComment}) => (commentToCheck) => editingComment.id === commentToCheck.id
@@ -31,12 +34,24 @@ export default {
     },
     setEditingComment(state, comment) {
       state.editingComment = {...comment};
+    },
+    setComments(state, comments) {
+      state.comments = comments.map((comm, idx) => ({id: idx, text: comm}));
+      const commentsIds = state.comments.map(c => Number.parseInt(c.id));
+
+      state.nextCommentId = Math.max.apply(Math, commentsIds) + 1;
+    },
+    changeAdminPassword(state, password){
+      state.adminPassword = password;
     }
   },
   actions: {
     submitComment({state, commit}, comment) {
       commit("addComment", comment);
       commit("resetEditingComment");
+    },
+    submitComments({state, commit}) {
+      apiSubmitDefaultComments(state.adminPassword, state.comments.map(c => c.text));
     },
     submitEditingComment({state, commit}) {
       const editingComment = state.editingComment;
@@ -56,6 +71,10 @@ export default {
         commit("resetEditingComment");
       }
       commit("deleteComment", comment);
+    },
+    fetchComments({commit}) {
+      apiFetchDefaultComments().then(response => response.json())
+          .then(comments => commit("setComments", comments));
     }
   }
 };

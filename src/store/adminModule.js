@@ -1,12 +1,10 @@
+import {apiFetchDefaultComments} from "../api";
+
 export default {
   namespaced: true,
   state: {
     comments: [],
-    editingComment: {
-      id: undefined,
-      text: ""
-    },
-    nextCommentId: 0
+    users: [],
   },
   getters: {
     isCommentEditing: ({editingComment}) => (commentToCheck) => editingComment.id === commentToCheck.id
@@ -31,6 +29,9 @@ export default {
     },
     setEditingComment(state, comment) {
       state.editingComment = {...comment};
+    },
+    setDefaultComments(state, comments) {
+      state.defaultComments = comments.map((comm, idx) => ({id: idx, text: comm}));
     }
   },
   actions: {
@@ -56,6 +57,10 @@ export default {
         commit("resetEditingComment");
       }
       commit("deleteComment", comment);
+    },
+    fetchDefaultComments({commit}) {
+      apiFetchDefaultComments().then(response => response.json())
+          .then(comments => commit("setDefaultComments", comments));
     }
   }
 };

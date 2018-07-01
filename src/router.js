@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import About from "./views/About.vue";
+import DefaultCommentsAdmin from "./views/DefaultCommentsAdmin.vue";
+import UsersAdmin from "./views/UsersAdmin.vue";
 
 Vue.use(Router);
 
@@ -13,10 +14,14 @@ export default new Router({
       component: Home
     },
     {
-      path: "/admin",
-      name: "about",
-      component: About,
-      meta: { requireAuth: true }
+      path: "/admin/comments",
+      name: "admin-comments",
+      component: DefaultCommentsAdmin,
+    },
+    {
+      path: "/admin/users",
+      name: "admin-users",
+      component: UsersAdmin,
     }
   ]
 });
