@@ -2,32 +2,37 @@ let root = "/api";
 if (process.env.NODE_ENV !== "production") {
   root = "http://localhost:3000" + root;
 }
-export const apiFetchDefaultComments = () => fetch(root + "/default-comments");
-export const apiFetchUsers = (password) => fetch(root + "/users", {
-  method: "GET",
-  credentials: "same-origin",
-  headers: {
-    "Admin-Password": password
-  }
-});
+const credentials = "same-origin";
+
+export const apiFetchDefaultComments = () => fetch(root + "/comments");
+
+export const apiFetchUsers = (password) => (
+    fetch(root + "/users", {
+      method: "GET",
+      credentials,
+      headers: {
+        "Admin-Password": password,
+      }
+    })
+);
 
 export const apiSubmitUsers = (password, users) => (
     fetch(root + "/users", {
       method: "POST",
-      credentials: "same-origin",
+      credentials,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Admin-Password": password
       },
-      body: JSON.stringify({password, users})
+      body: JSON.stringify(users)
     })
 );
 
 
-
 export const apiStart = (body) => (
-    fetch(root + "/start", {
+    fetch(root + "/worker/start", {
       method: "POST",
-      credentials: "same-origin",
+      credentials,
       headers: {
         'content-type': 'application/json'
       },
@@ -36,16 +41,20 @@ export const apiStart = (body) => (
 );
 
 export const apiSubmitDefaultComments = (password, comments) => (
-    fetch(root + "/default-comments", {
+    fetch(root + "/comments", {
       method: "POST",
-      credentials: "same-origin",
+      credentials,
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        "Admin-Password": password
       },
-      body: JSON.stringify({password, comments})
+      body: JSON.stringify(comments)
     })
 );
 
 export const apiStatus = () => (
-    fetch(root + "/status", {credentials: 'same-origin'}).then(r => r.json())
+    fetch(root + "/worker/status", {
+      method: "GET",
+      credentials
+    }).then(r => r.json())
 );

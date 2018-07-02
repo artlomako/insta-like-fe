@@ -1,25 +1,25 @@
 <template>
-  <modal name="default-comments" @before-open="fetchDefaultComments">
+  <modal name="default-comments" @before-open="fetchComments">
     <div class="cl">
       <p class="default-comment-list__title">Wybierz komentarz z listy</p>
-      <list :items="defaultComments" :on-select="onCommentClick"/>
+      <list :items="comments" :on-select="onCommentClick"/>
     </div>
   </modal>
 </template>
 
 <script>
   import List from "./List";
-  import {createNamespacedHelpers} from "vuex";
+  import {mapState, mapActions} from "vuex";
 
-  const {mapState, mapActions} = createNamespacedHelpers("comments");
 
   export default {
     name: "DefaultCommentList",
     computed: {
-      ...mapState(["defaultComments"])
+      ...mapState("defaultComments", ["comments"])
     },
     methods: {
-      ...mapActions(["submitComment", "fetchDefaultComments"]),
+      ...mapActions("comments", ["submitComment"]),
+      ...mapActions("defaultComments", ["fetchComments"]),
       onCommentClick(comment) {
         this.submitComment(comment);
         this.$modal.hide("default-comments");
