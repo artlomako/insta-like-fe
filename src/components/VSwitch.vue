@@ -1,5 +1,5 @@
 <template>
-  <img :src="icon" :class="[{'container--disabled': !enabled}, 'container', {'container--big' : primary}]" @click="$emit('click')"/>
+  <img :src="icon" :class="[{'container--disabled': !enabled}, 'container', {'container--big' : primary}]" @click="onClick"/>
 </template>
 
 <script>
@@ -20,6 +20,10 @@
         required: false,
         default: false
       },
+      onClick: {
+        type: Function,
+        required: true
+      }
     }
   };
 </script>

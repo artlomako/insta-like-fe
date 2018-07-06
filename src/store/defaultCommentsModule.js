@@ -15,6 +15,9 @@ export default {
     isCommentEditing: ({editingComment}) => (commentToCheck) => editingComment.id === commentToCheck.id
   },
   mutations: {
+    changeAdminPassword(state,text){
+      state.adminPassword = text;
+    },
     changeEditingCommentText(state, text) {
       state.editingComment.text = text;
     },
@@ -41,9 +44,7 @@ export default {
 
       state.nextCommentId = Math.max.apply(Math, commentsIds) + 1;
     },
-    changeAdminPassword(state, password){
-      state.adminPassword = password;
-    }
+
   },
   actions: {
     submitComment({state, commit}, comment) {

@@ -1,14 +1,22 @@
 <template>
-  <div :class="['counter', {'counter--disabled': disabled}]">
-    <button class="counter__button counter__button--decrement" @click="decrement" :disabled="disabled">-</button>
-    <input class="counter__input" type="number" :value="value" @blur="onChange" :disabled="disabled"/>
-    <button class="counter__button counter__button--increment" @click="increment" :disabled="disabled">+</button>
+  <div :class="['container', {'container--disabled': disabled}]">
+    <span>{{label}}</span>
+    <div class="counter">
+      <button class="counter__button counter__button--decrement" @click="decrement" :disabled="disabled">-</button>
+      <input class="counter__input" type="number" v-model="localValue" @change="onChange" :disabled="disabled"/>
+      <button class="counter__button counter__button--increment" @click="increment" :disabled="disabled">+</button>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
     name: "Counter",
+    data() {
+      return {
+        localValue: this.value || 0
+      }
+    },
     props: {
       value: {
         required: true,
@@ -17,7 +25,7 @@
       min: {
         required: false,
         type: Number,
-        default: 1
+        default: 0
       },
       max: {
         required: false,
@@ -28,30 +36,40 @@
         required: false,
         type: Boolean,
         default: false
+      },
+      label: {
+        required: false,
+        type: String
       }
     },
     methods: {
       increment() {
         if (this.value < this.max) {
           this.$emit("change", this.value + 1);
+          this.localValue = this.value + 1;
         }
       },
       decrement() {
         if (this.value > this.min) {
           this.$emit("change", this.value - 1);
+          this.localValue = this.value - 1;
         }
       },
       onChange(event) {
-        const newValue = event.target.value;
+        const newValue = Number.parseInt(event.target.value || 0);
         if (newValue > this.max) {
           this.$emit("change", this.max);
+          this.localValue = this.max;
           return;
         }
         if (newValue < this.min) {
           this.$emit("change", this.min);
+          this.localValue = this.min;
           return;
         }
-        this.$emit("change", Number.parseInt(newValue));
+        this.$emit("change", newValue);
+        this.localValue = newValue;
+
       }
     }
   }
@@ -61,11 +79,16 @@
   .counter {
     display: flex;
     height: 1.4rem;
-    transition: 0.5s;
-
   }
 
-  .counter--disabled {
+  .container {
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container--disabled {
     opacity: 0.5;
   }
 

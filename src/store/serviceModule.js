@@ -26,26 +26,33 @@ export default {
     start(context) {
       const setStatus = (status) => commit("setStatus", status);
       const settings = context.rootState.settings;
+      const comments = context.rootState.comments;
       const commit = context.commit;
       if (settings.photoUrl.length === 0 || !context.rootGetters["settings/photoUrlValid"]) {
         setStatus("INVALID_PHOTO_URL");
         return;
       }
-      if (!settings.likes.enabled && !settings.comments.enabled) {
-        setStatus("NO_OPTION_CHOSEN");
+      if (settings.comments.enabled && comments.comments.length === 0) {
+        setStatus("NO_COMMENTS");
         return;
       }
       const body = {
         photoUrl: settings.photoUrl
       };
-      if (settings.likes.enabled) {
-        body.likes = settings.likes.number;
+      if (settings.likes.enabled && settings.likes.number > 0) {
+        body.likes = {number: settings.likes.number, period: settings.likes.period}
       }
-      if (settings.comments.enabled) {
+      if (settings.comments.enabled && settings.comments.number > 0) {
         body.comments = {
           number: settings.comments.number,
+          period: settings.comments.period,
           items: context.rootState.comments.comments.map(c => c.text)
         };
+      }
+
+      if (!body.likes && !body.comments) {
+        setStatus("NO_OPTION_CHOSEN");
+        return;
       }
 
       apiStart(body)

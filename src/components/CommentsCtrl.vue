@@ -1,8 +1,12 @@
 <template>
   <div class="likes-control">
-    <v-switch icon="comment.svg" :enabled="comments.enabled" @click="switchComments"/>
-    <counter max="50" class="likes-control__number" :value="comments.number" @change="changeNumberOfComments"
-             :disabled="!comments.enabled" :max="20"/>
+    <v-switch icon="comment.svg" :enabled="comments.enabled" :on-click="switchComments"/>
+    <counter :max="limits.comments" class="likes-control__number" :value="comments.number"
+             @change="changeNumberOfComments"
+             :disabled="!comments.enabled"/>
+    <counter :max="999" class="likes-control__number" :value="comments.period"
+             @change="changeCommentsPeriod"
+             :disabled="!comments.enabled" label="Przerwa (s)"/>
   </div>
 </template>
 
@@ -16,10 +20,10 @@
   export default {
     name: "CommentsCtrl",
     computed: {
-      ...mapState(["comments"]),
+      ...mapState(["comments", "limits"]),
     },
     methods: {
-      ...mapMutations(["switchComments", "changeNumberOfComments"])
+      ...mapMutations(["switchComments", "changeNumberOfComments", "changeCommentsPeriod"])
     },
     components: {
       Counter,

@@ -1,5 +1,5 @@
 <template>
-  <input :class="['url-input', {'url-input--error': !photoUrlValid}]" :value="photoUrl" @keyup="onChange"
+  <input :class="['url-input', {'url-input--error': !photoUrlValid}]" :value="photoUrl"  @input="onChange"
          placeholder="Link do zdjęcia"/>
 </template>
 

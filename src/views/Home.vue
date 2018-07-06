@@ -3,8 +3,8 @@
     <photo-url-input/>
     <div class="switches">
       <likes-control/>
-      <v-switch icon="start.svg" primary @click="onClickStart"/>
-      <v-switch icon="info.svg" primary @click="showStatusModal"/>
+      <v-switch icon="start.svg" primary :on-click="onClickStart"/>
+      <v-switch icon="info.svg" primary :on-click="showStatusModal"/>
       <comments-ctrl/>
     </div>
     <transition name="fade">
@@ -45,12 +45,16 @@
     },
     methods: {
       ...mapActions("service", ["start"]),
+      ...mapActions("settings", ["fetchLimits"]),
       onClickStart() {
         this.start();
       },
       showStatusModal() {
         this.$modal.show("processes");
       }
+    },
+    beforeMount() {
+      this.fetchLimits();
     }
   }
 </script>

@@ -9,7 +9,7 @@
             {{errors(process)}}</p>
         </li>
       </ul>
-      <v-switch class="refresh-btn" icon="refresh.svg" @click="fetchData"/>
+      <v-switch class="refresh-btn" icon="refresh.svg" :on-click="fetchData"/>
     </div>
   </modal>
 </template>
@@ -92,9 +92,8 @@
 
   .processes__item {
     border-bottom: 1px solid #ccc;
-    padding-bottom: 0.5rem;
     transition: font-size 0.3s ease, background-color 0.3s ease;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,7 +129,7 @@
     height: 100%;
   }
 
-  .refresh-btn{
-    margin:0.5rem;
+  .refresh-btn {
+    margin: 0.5rem;
   }
 </style>

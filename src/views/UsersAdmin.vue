@@ -13,7 +13,7 @@
     </div>
     <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
     <div class="btn">
-      <v-switch class="refresh-btn" icon="save.svg" @click="submitComments"/>
+      <v-switch class="refresh-btn" icon="save.svg" :on-click="submitComments"/>
     </div>
   </div>
 </template>

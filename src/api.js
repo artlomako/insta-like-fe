@@ -1,8 +1,10 @@
 let root = "/api";
+let credentials = "same-origin";
+
 if (process.env.NODE_ENV !== "production") {
   root = "http://localhost:3000" + root;
+  credentials = "include";
 }
-const credentials = "same-origin";
 
 export const apiFetchDefaultComments = () => fetch(root + "/comments");
 
@@ -57,4 +59,23 @@ export const apiStatus = () => (
       method: "GET",
       credentials
     }).then(r => r.json())
+);
+
+export const apiGetLimits = () => (
+    fetch(root + "/limits", {
+      method: "GET",
+      credentials
+    }).then(r => r.json())
+);
+
+export const apiSubmitLimits = (password, limits) => (
+    fetch(root + "/limits", {
+      method: "POST",
+      credentials,
+      headers: {
+        'content-type': 'application/json',
+        "Admin-Password": password
+      },
+      body: JSON.stringify(limits)
+    })
 );

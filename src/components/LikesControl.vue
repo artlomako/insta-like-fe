@@ -1,8 +1,12 @@
 <template>
   <div class="likes-control">
-    <v-switch icon="heart.svg" :enabled="likes.enabled" @click="switchLikes"/>
-    <counter max="500" class="likes-control__number" :value="likes.number" @change="changeNumberOfLikes"
+    <v-switch icon="heart.svg" :enabled="likes.enabled" :on-click="switchLikes"/>
+    <counter :max="limits.likes" class="likes-control__number" :value="likes.number" @change="changeNumberOfLikes"
              :disabled="!likes.enabled"/>
+    <counter :max="999" class="likes-control__number" :value="likes.period"
+             @change="changeLikesPeriod"
+             :disabled="!likes.enabled" label="Przerwa (s)"/>
+
   </div>
 </template>
 
@@ -16,10 +20,10 @@
   export default {
     name: "LikesControl",
     computed: {
-      ...mapState(["likes"]),
+      ...mapState(["likes", "limits"]),
     },
     methods: {
-      ...mapMutations(["switchLikes", "changeNumberOfLikes"])
+      ...mapMutations(["switchLikes", "changeNumberOfLikes", "changeLikesPeriod"])
     },
     components: {
       Counter,

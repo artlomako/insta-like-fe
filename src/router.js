@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import DefaultCommentsAdmin from "./views/DefaultCommentsAdmin.vue";
 import UsersAdmin from "./views/UsersAdmin.vue";
+import LimitsAdmin from "./views/LimitsAdmin.vue";
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: "/admin/users",
       name: "admin-users",
       component: UsersAdmin,
+    },
+    {
+      path: "/admin/limits",
+      name: "admin-limits",
+      component: LimitsAdmin,
     }
   ]
 });

@@ -3,15 +3,14 @@
 </template>
 
 <script>
-  import {createNamespacedHelpers} from "vuex";
-
-  const {mapState, mapMutations} = createNamespacedHelpers("service");
+  import {mapState, mapMutations} from "vuex";
 
   export default {
     name: "ErrorDialog",
     computed: {
-      ...mapState(["status"]),
-      ...mapMutations(["setStatus"])
+      ...mapState("service", ["status"]),
+      ...mapState("settings", ["photoUrl"]),
+      ...mapMutations("service", ["setStatus"])
     },
     watch: {
       status({value}) {
@@ -19,8 +18,8 @@
         let icon;
         switch (value) {
           case "OK":
-            errorMessage ="<div style=\"display: flex; align-items: center;\"><img style=\"width:4rem; height: 4rem; margin-right: 1rem;\" src=\"success.svg\"/><span style=\"font-weight: bold; font-size: 1rem\">Uruchomiono</span></div>";
-            icon="success";
+            errorMessage = "<div style=\"display: flex; align-items: center;\"><img style=\"width:4rem; height: 4rem; margin-right: 1rem;\" src=\"success.svg\"/><span style=\"font-weight: bold; font-size: 1rem\">Uruchomiono. Akcje ruszą do 5 minut.</span></div>";
+            icon = "success";
             break;
           case "UNAUTHORIZED":
             errorMessage = "Użytkownik, który udostępnił zdjęcie nie ma dostępu do serwisu";
@@ -30,6 +29,9 @@
             break;
           case "ALREADY_PROCESSING":
             errorMessage = "Zdjęcie już jest w trakcie przetwarzania";
+            break;
+          case "NO_COMMENTS":
+            errorMessage = "Nie dodano komentarzy";
             break;
           case "INVALID_PHOTO_URL":
             errorMessage = "Niepoprawny link do zdjęcia";
