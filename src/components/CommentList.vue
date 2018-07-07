@@ -4,7 +4,6 @@
 
 
 <script>
-  import VIconButton from "./VIconButton";
   import List from "./List";
   import {createNamespacedHelpers} from "vuex";
 
@@ -23,7 +22,6 @@
       ...mapActions(["selectComment", "deleteComment"])
     },
     components: {
-      VIconButton,
       List
     }
   };

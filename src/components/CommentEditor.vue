@@ -5,8 +5,8 @@
              @change="changeEditingCommentText($event.target.value)" placeholder="Treść komentarza..."
              @keyup.enter="onSubmit"></input>
       <div class="editor__buttons">
-        <v-icon-button @click="onSubmit" :icon="`${submitButtonIcon}.svg`" class="editor__button"/>
-        <v-icon-button @click="showDefaultComments" icon="search.svg" class="editor__button"/>
+        <v-button size="tiny" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
+        <v-button size="tiny" @click="showDefaultComments" icon="search.svg"/>
       </div>
     </div>
     <default-comment-list/>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import VIconButton from "./VIconButton";
+  import VButton from "./common/VButton";
   import DefaultCommentList from "./DefaultCommentList";
 
   import {createNamespacedHelpers} from "vuex";
@@ -25,7 +25,7 @@
     computed: {
       ...mapState(["editingComment"]),
       submitButtonIcon() {
-        return this.editingComment.id === -1 ? "plus" : "check";
+        return !this.editingComment.id ? "plus" : "check";
       }
     },
     methods: {
@@ -41,13 +41,13 @@
       ...mapActions(["submitEditingComment"])
     },
     components: {
-      VIconButton,
+      VButton,
       DefaultCommentList
     }
   };
 </script>
 
-<style>
+<style scoped>
   .editor {
     display: flex;
     flex-direction: row;
@@ -61,19 +61,14 @@
     background-color: #d1d3c0;
     font-size: 1rem;
     width: 100%;
+    margin: 0;
   }
 
   .editor__buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.2rem 0 0.2rem 0.5rem;
+    padding-left: 0.5rem;
   }
-
-  .editor__button {
-    width: 1.4rem;
-    height: 1.4rem;
-  }
-
 
 </style>

@@ -4,7 +4,7 @@
     <input class="editor__text-area" :value="adminPassword"
            @change="changeAdminPassword($event.target.value)" placeholder="Hasło"></input>
     Polubienia:
-    <counter  :max="999" class="likes-control__number" :value="limits.likes" @change="changeLikesLimit"/>
+    <counter :max="999" class="likes-control__number" :value="limits.likes" @change="changeLikesLimit"/>
     Komentarze:
     <counter :max="999" class="likes-control__number" :value="limits.comments" @change="changeCommentsLimit"/>
 
@@ -41,7 +41,14 @@
 </script>
 
 <style>
+
   .editor__text-area {
+    resize: none;
+    height: 2rem;
+    border: none;
+    background-color: #d1d3c0;
+    font-size: 1rem;
+    width: 100%;
     margin-top: 1rem;
   }
 

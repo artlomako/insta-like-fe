@@ -7,9 +7,7 @@
       <input class="editor__text-area" :value="editingComment.text"
              @change="changeEditingCommentText($event.target.value)" placeholder="Użytkownik"
              @keyup.enter="onSubmit"></input>
-      <div class="editor__buttons">
-        <v-icon-button @click="onSubmit" :icon="`${submitButtonIcon}.svg`" class="editor__button"/>
-      </div>
+      <v-button size="medium" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
     </div>
     <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
     <div class="btn">
@@ -21,7 +19,7 @@
 
 <script>
   import List from "@/components/List";
-  import VIconButton from "@/components/VIconButton";
+  import VButton from "@/components/common/VButton";
   import VSwitch from "@/components/VSwitch";
   import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
 
@@ -29,7 +27,7 @@
     name: "DefaultCommentsAdmin",
     components: {
       List,
-      VIconButton,
+      VButton,
       VSwitch
     },
     computed: {
@@ -57,7 +55,14 @@
 </script>
 
 <style>
+
   .editor__text-area {
+    resize: none;
+    height: 2rem;
+    border: none;
+    background-color: #d1d3c0;
+    font-size: 1rem;
+    width: 100%;
     margin-top: 1rem;
   }
 
