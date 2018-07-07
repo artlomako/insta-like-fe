@@ -10,14 +10,14 @@
                   type="secondary"
                   placeholder="Użytkownik"></v-text-field>
     <v-button size="medium" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
-    <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
+    <v-list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
     <v-button class="save-btn" icon="save.svg" size="medium" @click="submitComments"/>
   </div>
 </template>
 
 
 <script>
-  import List from "@/components/List";
+  import VList from "@/components/common/VList";
   import VButton from "@/components/common/VButton";
   import VTextField from "@/components/common/VTextField";
   import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
@@ -25,7 +25,7 @@
   export default {
     name: "DefaultCommentsAdmin",
     components: {
-      List,
+      VList,
       VButton,
       VTextField
     },

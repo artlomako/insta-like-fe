@@ -2,13 +2,13 @@
   <modal name="default-comments" @before-open="fetchComments">
     <div class="cl">
       <p class="default-comment-list__title">Wybierz komentarz z listy</p>
-      <list :items="comments" :on-select="onCommentClick"/>
+      <v-list :items="comments" :on-select="onCommentClick"/>
     </div>
   </modal>
 </template>
 
 <script>
-  import List from "./List";
+  import VList from "./common/VList";
   import {mapState, mapActions} from "vuex";
 
 
@@ -26,7 +26,7 @@
       }
     },
     components: {
-      List
+      VList
     }
   };
 </script>

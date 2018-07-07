@@ -1,10 +1,9 @@
 <template>
-  <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
+  <v-list :items="comments" :on-select="selectComment" :on-delete="deleteComment" :is-selected="isCommentEditing"/>
 </template>
 
-
 <script>
-  import List from "./List";
+  import VList from "./common/VList";
   import {createNamespacedHelpers} from "vuex";
 
   const {mapGetters, mapState, mapActions} = createNamespacedHelpers("comments");
@@ -22,7 +21,7 @@
       ...mapActions(["selectComment", "deleteComment"])
     },
     components: {
-      List
+      VList
     }
   };
 </script>
