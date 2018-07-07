@@ -24,6 +24,10 @@ export default {
   },
   actions: {
     start(context) {
+      if (context.state.status.value === "WAITING_FOR_API") {
+        console.error("Prevent double request to API");
+        return;
+      }
       const setStatus = (status) => commit("setStatus", status);
       const settings = context.rootState.settings;
       const comments = context.rootState.comments;
@@ -54,6 +58,8 @@ export default {
         setStatus("NO_OPTION_CHOSEN");
         return;
       }
+
+      setStatus("WAITING_FOR_API");
 
       apiStart(body)
           .then(r => {
