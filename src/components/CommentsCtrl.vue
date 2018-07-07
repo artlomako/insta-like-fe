@@ -1,6 +1,6 @@
 <template>
   <div class="likes-control">
-    <v-switch icon="comment.svg" :enabled="comments.enabled" :on-click="switchComments"/>
+    <v-switch icon="comment.svg" :enabled="comments.enabled" @toggle="switchComments"/>
     <counter :max="limits.comments" class="likes-control__number" :value="comments.number"
              @change="changeNumberOfComments"
              :disabled="!comments.enabled"/>
@@ -12,7 +12,7 @@
 
 <script>
   import Counter from "./Counter";
-  import VSwitch from "./VSwitch";
+  import VSwitch from "./common/VSwitch";
   import {createNamespacedHelpers} from "vuex";
 
   const {mapMutations, mapState} = createNamespacedHelpers("settings");

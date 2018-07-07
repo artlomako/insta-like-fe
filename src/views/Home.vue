@@ -3,8 +3,8 @@
     <photo-url-input/>
     <div class="switches">
       <likes-control/>
-      <v-switch icon="start.svg" primary :on-click="onClickStart"/>
-      <v-switch icon="info.svg" primary :on-click="showStatusModal"/>
+      <v-button icon="start.svg" size="big" @click="onClickStart"/>
+      <v-button icon="info.svg" size="big" @click="showStatusModal"/>
       <comments-ctrl/>
     </div>
     <transition name="fade">
@@ -19,12 +19,12 @@
 <script>
   import {mapActions, mapState} from "vuex";
   import PhotoUrlInput from "@/components/PhotoUrlInput";
-  import VSwitch from "@/components/VSwitch";
   import CommentsControl from "@/components/CommentsControl";
   import ErrorDialog from "@/components/ErrorDialog";
   import StatusModal from "@/components/StatusModal";
   import LikesControl from "@/components/LikesControl";
   import CommentsCtrl from "@/components/CommentsCtrl";
+  import VButton from "../components/common/VButton";
 
   export default {
     name: "home",
@@ -32,13 +32,13 @@
       return {val: 1};
     },
     components: {
+      VButton,
       PhotoUrlInput,
-      VSwitch,
       CommentsControl,
       ErrorDialog,
       LikesControl,
       CommentsCtrl,
-      StatusModal
+      StatusModal,
     },
     computed: {
       ...mapState("settings", ["comments"])
@@ -88,9 +88,5 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
   {
     opacity: 0;
-  }
-
-  .btn-clazz {
-
   }
 </style>

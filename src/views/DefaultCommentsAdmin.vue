@@ -11,18 +11,15 @@
                   placeholder="Treść komentarza..."/>
     <v-button size="medium" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
     <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
-    <div class="btn">
-      <v-switch icon="save.svg" :on-click="submitComments"/>
-    </div>
+    <v-button icon="save.svg" size="medium" @click="submitComments"/>
   </div>
 </template>
 
 
 <script>
   import List from "@/components/List";
-  import VButton from "@/components/common/VButton";
   import VTextField from "@/components/common/VTextField";
-  import VSwitch from "@/components/VSwitch";
+  import VButton from "@/components/common/VButton";
   import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
 
   export default {
@@ -30,8 +27,7 @@
     components: {
       List,
       VTextField,
-      VButton,
-      VSwitch
+      VButton
     },
     computed: {
       ...mapState("defaultComments", ["comments", "editingComment", "adminPassword"]),
@@ -56,9 +52,3 @@
   }
 
 </script>
-
-<style scoped>
-  .btn {
-    text-align: center;
-  }
-</style>

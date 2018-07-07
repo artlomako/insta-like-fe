@@ -11,9 +11,7 @@
                   placeholder="Użytkownik"></v-text-field>
     <v-button size="medium" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
     <list :items="comments" :onSelect="selectComment" :onDelete="deleteComment" :isSelected="isCommentEditing"/>
-    <div class="btn">
-      <v-switch icon="save.svg" :on-click="submitComments"/>
-    </div>
+    <v-button class="save-btn" icon="save.svg" size="medium" @click="submitComments"/>
   </div>
 </template>
 
@@ -21,7 +19,6 @@
 <script>
   import List from "@/components/List";
   import VButton from "@/components/common/VButton";
-  import VSwitch from "@/components/VSwitch";
   import VTextField from "@/components/common/VTextField";
   import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
@@ -30,7 +27,6 @@
     components: {
       List,
       VButton,
-      VSwitch,
       VTextField
     },
     computed: {

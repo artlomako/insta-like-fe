@@ -9,18 +9,14 @@
             {{errors(process)}}</p>
         </li>
       </ul>
-      <v-switch class="refresh-btn" icon="refresh.svg" :on-click="fetchData"/>
+      <v-button class="refresh-btn" icon="refresh.svg" size="medium" @click="fetchData"/>
     </div>
   </modal>
 </template>
 
 <script>
-  import VSwitch from "./VSwitch";
+  import VButton from "./common/VButton";
   import {apiStatus} from "../api";
-  import {createNamespacedHelpers} from "vuex";
-
-
-  const {mapState, mapMutations} = createNamespacedHelpers("service");
 
   export default {
     name: "StatusModal",
@@ -77,7 +73,7 @@
       }
     },
     components: {
-      VSwitch
+      VButton
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="cont">
+  <div class="container">
     <h2>Limity</h2>
     <v-text-field :text="adminPassword"
                   @change="changeAdminPassword"
@@ -9,17 +9,14 @@
     <counter :max="999" :value="limits.likes" @change="changeLikesLimit"/>
     Komentarze:
     <counter :max="999" :value="limits.comments" @change="changeCommentsLimit"/>
-
-    <div class="btn">
-      <v-switch icon="save.svg" :on-click="submitLimits"/>
-    </div>
+    <v-button class="save-btn" icon="save.svg" size="medium" @click="submitLimits"/>
   </div>
 </template>
 
 
 <script>
   import Counter from "@/components/Counter";
-  import VSwitch from "@/components/VSwitch";
+  import VButton from "@/components/common/VButton";
   import VTextField from "@/components/common/VTextField";
   import {mapState, mapActions, mapMutations} from "vuex";
 
@@ -34,7 +31,7 @@
     },
     components: {
       Counter,
-      VSwitch,
+      VButton,
       VTextField
     },
     beforeMount() {
@@ -44,14 +41,14 @@
 
 </script>
 
-<style>
-  .btn {
-    text-align: center;
-  }
-
-  .cont {
+<style scoped>
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .save-btn {
+    margin: 1rem;
   }
 </style>
