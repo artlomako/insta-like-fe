@@ -7,11 +7,10 @@
 
 <script>
   import TheHeader from "./components/TheHeader";
-  import VButton from "./components/common/VButton";
 
   export default {
     name: "App",
-    components: {TheHeader, VButton}
+    components: {TheHeader}
   };
 </script>
 

@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="editor">
-      <input class="editor__text-area" :value="editingComment.text"
-             @change="changeEditingCommentText($event.target.value)" placeholder="Treść komentarza..."
-             @keyup.enter="onSubmit"></input>
+      <v-text-field :text="editingComment.text"
+                    @change="changeEditingCommentText"
+                    type="secondary"
+                    placeholder="Treść komentarza"
+                    @keyup.enter="onSubmit"></v-text-field>
       <div class="editor__buttons">
         <v-button size="tiny" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
         <v-button size="tiny" @click="showDefaultComments" icon="search.svg"/>
@@ -15,6 +17,7 @@
 
 <script>
   import VButton from "./common/VButton";
+  import VTextField from "./common/VTextField";
   import DefaultCommentList from "./DefaultCommentList";
 
   import {createNamespacedHelpers} from "vuex";
@@ -42,7 +45,8 @@
     },
     components: {
       VButton,
-      DefaultCommentList
+      DefaultCommentList,
+      VTextField
     }
   };
 </script>
@@ -52,16 +56,6 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-  }
-
-  .editor__text-area {
-    resize: none;
-    height: 2rem;
-    border: none;
-    background-color: #d1d3c0;
-    font-size: 1rem;
-    width: 100%;
-    margin: 0;
   }
 
   .editor__buttons {

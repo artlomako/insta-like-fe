@@ -1,15 +1,17 @@
 <template>
   <div class="cont">
     <h2>Limity</h2>
-    <input class="editor__text-area" :value="adminPassword"
-           @change="changeAdminPassword($event.target.value)" placeholder="Hasło"></input>
+    <v-text-field :text="adminPassword"
+                  @change="changeAdminPassword"
+                  type="secondary"
+                  placeholder="Hasło"/>
     Polubienia:
-    <counter :max="999" class="likes-control__number" :value="limits.likes" @change="changeLikesLimit"/>
+    <counter :max="999" :value="limits.likes" @change="changeLikesLimit"/>
     Komentarze:
-    <counter :max="999" class="likes-control__number" :value="limits.comments" @change="changeCommentsLimit"/>
+    <counter :max="999" :value="limits.comments" @change="changeCommentsLimit"/>
 
     <div class="btn">
-      <v-switch class="refresh-btn" icon="save.svg" :on-click="submitLimits"/>
+      <v-switch icon="save.svg" :on-click="submitLimits"/>
     </div>
   </div>
 </template>
@@ -18,7 +20,8 @@
 <script>
   import Counter from "@/components/Counter";
   import VSwitch from "@/components/VSwitch";
-  import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
+  import VTextField from "@/components/common/VTextField";
+  import {mapState, mapActions, mapMutations} from "vuex";
 
   export default {
     name: "DefaultCommentsAdmin",
@@ -31,7 +34,8 @@
     },
     components: {
       Counter,
-      VSwitch
+      VSwitch,
+      VTextField
     },
     beforeMount() {
       this.fetchLimits();
@@ -41,17 +45,6 @@
 </script>
 
 <style>
-
-  .editor__text-area {
-    resize: none;
-    height: 2rem;
-    border: none;
-    background-color: #d1d3c0;
-    font-size: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
   .btn {
     text-align: center;
   }
@@ -60,6 +53,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
   }
 </style>
