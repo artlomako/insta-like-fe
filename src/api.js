@@ -54,11 +54,13 @@ export const apiSubmitDefaultComments = (password, comments) => (
     })
 );
 
-export const apiStatus = () => (
+export const apiFetchStatus = () => (
     fetch(root + "/worker/status", {
       method: "GET",
       credentials
-    }).then(r => r.json())
+    })
+        .then(r => r.json())
+        .catch(() => [])
 );
 
 export const apiGetLimits = () => (

@@ -1,28 +1,38 @@
 <template>
-  <modal name="processes" @before-open="fetchData">
-    <div class="wrapper">
-      <p class="header">Aktualne procesy</p>
-      <ul class="processes">
-        <li class="processes__item" v-for="process in processes">
-          <p class="processes__item-text--primary">{{process.url}}</p>
-          <p class="processes__item-text--secondary">{{completedActions(process)}}/{{totalActions(process)}}. Błędy:
-            {{errors(process)}}</p>
-        </li>
-      </ul>
-      <v-button class="refresh-btn" icon="refresh.svg" size="medium" @click="fetchData"/>
-    </div>
-  </modal>
+  <v-modal title="Aktualne procesy" @close="$emit('hide')">
+    <v-list :items="listData"/>
+  </v-modal>
 </template>
 
 <script>
-  import VButton from "./common/VButton";
-  import {apiStatus} from "../api";
+  import VModal from "./common/VModal";
+  import VList from "./common/VList";
+  import {apiFetchStatus} from "../api";
 
   export default {
     name: "StatusModal",
+    mounted() {
+      apiFetchStatus().then(response => {
+        this.processes = response
+      });
+    },
     data() {
       return {
-        processes: []
+        processes: [{
+          "likes": {"error": 0, "waiting": 1, "success": 0},
+          "url": "https://www.instagram.com/p/BkeosKDBBep/?taken-by=miejscawewroclawiu_pl",
+          hash: "hashAAAbbaA"
+        }]
+      }
+    },
+    computed: {
+      listData() {
+        return this.processes.map(p => {
+          return {
+            id: p.hash,
+            text: this.completedActions(p) + "/" + this.totalActions(p) + " | " + p.url
+          }
+        });
       }
     },
     methods: {
@@ -42,16 +52,6 @@
 
         return total;
       },
-      errors(process) {
-        let result = 0;
-        if (process.likes) {
-          result += process.likes.error;
-        }
-        if (process.comments) {
-          result += process.comments.error;
-        }
-        return result;
-      },
       completedActions(process) {
         let completed = 0;
 
@@ -65,67 +65,11 @@
         }
 
         return completed;
-      },
-      fetchData() {
-        apiStatus().then(res => {
-          this.processes = res
-        })
       }
     },
     components: {
-      VButton
+      VModal,
+      VList
     }
   }
 </script>
-
-<style scoped>
-  .processes {
-    list-style-type: none;
-    padding-left: 0;
-    height: 100%;
-    overflow: auto;
-  }
-
-  .processes__item {
-    border-bottom: 1px solid #ccc;
-    transition: font-size 0.3s ease, background-color 0.3s ease;
-    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .processes__item-text--primary {
-    word-break: break-all;
-    max-width: 73%;
-    border-right: 1px solid #ccc;
-    font-weight: 500;
-    padding-right: 0.5rem;
-    /* display: inline-block; */
-  }
-
-  .processes__item-text--secondary {
-    font-weight: bold;
-  }
-
-  .processes__item:last-of-type {
-    border: none;
-  }
-
-  .header {
-    margin: 0.5rem 0 0 0.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .wrapper {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .refresh-btn {
-    margin: 0.5rem;
-  }
-</style>

@@ -4,13 +4,13 @@
     <div class="switches">
       <likes-control/>
       <v-button icon="start.svg" size="big" @click="onClickStart"/>
-      <v-button icon="info.svg" size="big" @click="showStatusModal"/>
+      <v-button icon="info.svg" size="big" @click="showStatusModal=true"/>
       <comments-ctrl/>
     </div>
     <transition name="fade">
       <comments-control class="comments" v-if="comments.enabled"/>
     </transition>
-    <status-modal/>
+    <status-modal v-if="showStatusModal" @hide="showStatusModal=false"/>
     <error-dialog/>
   </div>
 
@@ -29,7 +29,9 @@
   export default {
     name: "home",
     data() {
-      return {val: 1};
+      return {
+        showStatusModal: false
+      };
     },
     components: {
       VButton,
@@ -49,9 +51,6 @@
       onClickStart() {
         this.start();
       },
-      showStatusModal() {
-        this.$modal.show("processes");
-      }
     },
     beforeMount() {
       this.fetchLimits();
