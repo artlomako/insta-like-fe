@@ -6,7 +6,11 @@ if (process.env.NODE_ENV !== "production") {
   credentials = "include";
 }
 
-export const apiFetchDefaultComments = () => fetch(root + "/comments");
+export const apiFetchDefaultComments = () => (
+    fetch(root + "/comments")
+        .then(response => response.json())
+        .catch(() => [])
+);
 
 export const apiFetchUsers = (password) => (
     fetch(root + "/users", {

@@ -8,10 +8,10 @@
                     @keyup.enter="onSubmit"></v-text-field>
       <div class="editor__buttons">
         <v-button size="tiny" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
-        <v-button size="tiny" @click="showDefaultComments" icon="search.svg"/>
+        <v-button size="tiny" @click="showDefaultComments=true" icon="search.svg"/>
       </div>
     </div>
-    <default-comment-list/>
+    <default-comment-list v-if="showDefaultComments" @close="showDefaultComments=false"/>
   </div>
 </template>
 
@@ -25,6 +25,11 @@
   const {mapState, mapActions, mapMutations} = createNamespacedHelpers("comments");
   export default {
     name: "CommentEditor",
+    data() {
+      return {
+        showDefaultComments: false
+      }
+    },
     computed: {
       ...mapState(["editingComment"]),
       submitButtonIcon() {
@@ -36,9 +41,6 @@
         if (this.editingComment.text.trim().length > 0) {
           this.submitEditingComment();
         }
-      },
-      showDefaultComments() {
-        this.$modal.show("default-comments");
       },
       ...mapMutations(["changeEditingCommentText"]),
       ...mapActions(["submitEditingComment"])
@@ -64,5 +66,4 @@
     justify-content: space-between;
     padding-left: 0.5rem;
   }
-
 </style>
