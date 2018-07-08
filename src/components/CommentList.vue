@@ -1,5 +1,6 @@
 <template>
-  <v-list :items="comments" :on-select="selectComment" :on-delete="deleteComment" :is-selected="isCommentEditing"/>
+  <v-list v-show="comments.length > 0" :items="comments" :on-select="selectComment" :on-delete="deleteComment"
+          :is-selected="isCommentEditing"/>
 </template>
 
 <script>
