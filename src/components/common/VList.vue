@@ -1,8 +1,9 @@
 <template>
-  <ul class="list">
-    <li :class="itemClasses(item)" v-for="item in items" :key="item.id" @click.self="onSelect(item)">
-      <span class="item__text" @click.self="onSelect(item)">{{item.text}}</span>
-      <v-button class="item__remove-button" v-if="!!onDelete" size="small" @click="onDelete(item)"
+  <p class="list__no-data" v-if="items.length === 0">Brak danych</p>
+  <ul v-else class="list">
+    <li :class="itemClasses(item)" v-for="item in items" :key="item.id" @click.self="onSelect && onSelect(item)">
+      <span class="item__text" @click.self="onSelect && onSelect(item)">{{item.text}}</span>
+      <v-button class="item__remove-button" v-if="onDelete" size="small" @click="onDelete(item)"
                 icon="minus.svg"/>
     </li>
   </ul>
@@ -36,7 +37,8 @@
         return [
           "list__item",
           {
-            "list__item--selected": this.isSelected && this.isSelected(item)
+            "list__item--selected": this.isSelected && this.isSelected(item),
+            "list__item--hoverable": this.onSelect
           }
         ];
       }
@@ -54,6 +56,10 @@
     overflow: auto;
   }
 
+  .list__no-data {
+    text-align: center;
+  }
+
   .list__item {
     border-bottom: 1px solid #ccc;
     transition: 0.5s ease;
@@ -67,7 +73,7 @@
     border: none;
   }
 
-  .list__item:hover, .list__item--selected {
+  .list__item--hoverable:hover, .list__item--selected {
     background-color: #d1d3c0;
     font-size: 1.2em;
     font-weight: 400;
