@@ -1,5 +1,5 @@
 <template>
-  <v-modal title="Aktualne procesy" @close="$emit('hide')">
+  <v-modal title="Aktualne procesy" @close="$emit('close')">
     <v-list :items="listData"/>
   </v-modal>
 </template>

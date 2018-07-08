@@ -10,7 +10,7 @@
     <transition name="fade">
       <comments-control class="comments" v-if="comments.enabled"/>
     </transition>
-    <status-modal v-if="showStatusModal" @hide="showStatusModal=false"/>
+    <status-modal v-if="showStatusModal" @close="showStatusModal=false"/>
     <error-dialog/>
   </div>
 
