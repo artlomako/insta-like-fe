@@ -2,7 +2,7 @@
   <v-base-modal flex @close="$emit('close')">
     <div class="dialog__content">
       <img class="content__icon" :src="icon"/>
-      <p class="content__text">{{text}}</p>
+      <p class="content__text" v-html="text"></p>
     </div>
     <div class="dialog__footer">
       <v-button class="footer__button" size="medium" icon="check.svg" @click="$emit('close')"/>

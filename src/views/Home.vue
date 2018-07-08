@@ -11,7 +11,7 @@
       <comments-control class="comments" v-if="comments.enabled"/>
     </transition>
     <status-modal v-if="showStatusModal" @close="showStatusModal=false"/>
-    <error-dialog/>
+    <message-dialog/>
   </div>
 
 </template>
@@ -20,11 +20,11 @@
   import {mapActions, mapState} from "vuex";
   import PhotoUrlInput from "@/components/PhotoUrlInput";
   import CommentsControl from "@/components/CommentsControl";
-  import ErrorDialog from "@/components/ErrorDialog";
   import StatusModal from "@/components/StatusModal";
   import LikesControl from "@/components/LikesControl";
   import CommentsCtrl from "@/components/CommentsCtrl";
   import VButton from "../components/common/VButton";
+  import MessageDialog from "../components/MessageDialog";
 
   export default {
     name: "home",
@@ -34,10 +34,10 @@
       };
     },
     components: {
+      MessageDialog,
       VButton,
       PhotoUrlInput,
       CommentsControl,
-      ErrorDialog,
       LikesControl,
       CommentsCtrl,
       StatusModal,
