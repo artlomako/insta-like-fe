@@ -34,6 +34,7 @@
     border: none;
     background: none;
     padding: 0;
+    outline: none;
   }
 
   .button--tiny {
