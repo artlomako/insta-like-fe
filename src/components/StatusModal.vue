@@ -1,5 +1,5 @@
 <template>
-  <v-modal title="Aktualne procesy" @close="$emit('close')">
+  <v-modal title="Aktualne procesy" @close="goBack">
     <v-list :items="listData"/>
   </v-modal>
 </template>
@@ -42,6 +42,10 @@
           text += process.remainingComments + " \uD83D\uDCAC";
         }
         return "<strong>" + text + "</strong>";
+      },
+      goBack() {
+        const location = sessionStorage.getItem("lastVisitedRoute") || "";
+        this.$router.push(location);
       }
     },
     components: {

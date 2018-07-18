@@ -4,30 +4,40 @@ import Home from "./views/Home.vue";
 import DefaultCommentsAdmin from "./views/DefaultCommentsAdmin.vue";
 import UsersAdmin from "./views/UsersAdmin.vue";
 import LimitsAdmin from "./views/LimitsAdmin.vue";
+import StatusModal from "./components/StatusModal";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
+
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: "status",
+          component: StatusModal
+        }
+      ]
     },
     {
       path: "/admin/comments",
-      name: "admin-comments",
       component: DefaultCommentsAdmin,
     },
     {
       path: "/admin/users",
-      name: "admin-users",
       component: UsersAdmin,
     },
     {
       path: "/admin/limits",
-      name: "admin-limits",
       component: LimitsAdmin,
     }
   ]
 });
+
+router.afterEach((to, from) => {
+  sessionStorage.setItem("lastVisitedRoute", from.path);
+});
+
+export default router;
