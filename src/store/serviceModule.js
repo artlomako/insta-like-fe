@@ -44,7 +44,7 @@ export default {
         photoUrl: settings.photoUrl
       };
       if (settings.likes.enabled && settings.likes.number > 0) {
-        body.likes = {number: settings.likes.number, period: settings.likes.period}
+        body.likes = settings.likes.number
       }
       if (settings.comments.enabled && settings.comments.number > 0) {
         body.comments = {

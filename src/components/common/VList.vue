@@ -2,7 +2,7 @@
   <p class="list__no-data" v-if="items.length === 0">Brak danych</p>
   <ul v-else class="list">
     <li :class="itemClasses(item)" v-for="item in items" :key="item.id" @click.self="onSelect && onSelect(item)">
-      <span class="item__text" @click.self="onSelect && onSelect(item)">{{item.text}}</span>
+      <span class="item__text" @click.self="onSelect && onSelect(item)" v-html="item.text"></span>
       <v-button class="item__remove-button" v-if="onDelete" size="small" @click="onDelete(item)"
                 icon="minus.svg"/>
     </li>
