@@ -5,6 +5,8 @@ import DefaultCommentsAdmin from "./views/DefaultCommentsAdmin.vue";
 import UsersAdmin from "./views/UsersAdmin.vue";
 import LimitsAdmin from "./views/LimitsAdmin.vue";
 import StatusModal from "./components/StatusModal";
+import NewLikes from "./components/NewLikes";
+import NewComments from "./components/NewComments";
 
 Vue.use(Router);
 
@@ -18,6 +20,14 @@ const router = new Router({
         {
           path: "status",
           component: StatusModal
+        },
+        {
+          path: "likes",
+          component: NewLikes
+        },
+        {
+          path: "comments",
+          component: NewComments
         }
       ]
     },

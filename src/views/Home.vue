@@ -2,58 +2,26 @@
   <div class="home">
     <photo-url-input/>
     <div class="switches">
-      <likes-control/>
-      <v-button icon="start.svg" size="big" @click="onClickStart"/>
-      <v-button icon="info.svg" size="big" @click="showStatusModal=true"/>
-      <comments-ctrl/>
+      <router-link to="status">
+        <v-button icon="info.svg" size="big"/>
+      </router-link>
+      <mode-selector/>
     </div>
-    <transition name="fade">
-      <comments-control class="comments" v-if="comments.enabled"/>
-    </transition>
-    <status-modal v-if="showStatusModal" @close="showStatusModal=false"/>
-    <message-dialog/>
+    <router-view></router-view>
   </div>
-
 </template>
 
 <script>
-  import {mapActions, mapState} from "vuex";
   import PhotoUrlInput from "@/components/PhotoUrlInput";
-  import CommentsControl from "@/components/CommentsControl";
-  import StatusModal from "@/components/StatusModal";
-  import LikesControl from "@/components/LikesControl";
-  import CommentsCtrl from "@/components/CommentsCtrl";
-  import VButton from "../components/common/VButton";
-  import MessageDialog from "../components/MessageDialog";
+  import VButton from "@/components/common/VButton";
+  import ModeSelector from "@/components/ModeSelector";
 
   export default {
     name: "home",
-    data() {
-      return {
-        showStatusModal: false
-      };
-    },
     components: {
-      MessageDialog,
+      ModeSelector,
       VButton,
       PhotoUrlInput,
-      CommentsControl,
-      LikesControl,
-      CommentsCtrl,
-      StatusModal,
-    },
-    computed: {
-      ...mapState("settings", ["comments"])
-    },
-    methods: {
-      ...mapActions("service", ["start"]),
-      ...mapActions("settings", ["fetchLimits"]),
-      onClickStart() {
-        this.start();
-      },
-    },
-    beforeMount() {
-      this.fetchLimits();
     }
   }
 </script>

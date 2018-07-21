@@ -5,6 +5,7 @@ import comments from "./commentsModule";
 import defaultComments from "./defaultCommentsModule";
 import users from "./usersModule";
 import service from "./serviceModule";
+import worker from "./workerModule";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     comments,
     service,
     defaultComments,
-    users
+    users,
+    worker
   },
   plugins: [createPersistedState()]
 })

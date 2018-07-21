@@ -1,5 +1,8 @@
 <template>
-  <v-button :class="classes" size="medium" :icon="icon" @click="$emit('toggle')"/>
+  <div>
+    <v-button v-show="front" size="medium" :icon="iconFront" :size="size" @click="$emit('toggle')"/>
+    <v-button v-show="!front" size="medium" :icon="iconBack" :size="size" @click="$emit('toggle')"/>
+  </div>
 </template>
 
 <script>
@@ -11,33 +14,23 @@
       VButton
     },
     props: {
-      icon: {
+      front: {
+        required: true,
+        type: Boolean
+      },
+      iconFront: {
         required: true,
         type: String
       },
-      enabled: {
+      iconBack: {
         required: true,
-        type: Boolean
-      }
-    },
-    computed: {
-      classes() {
-        return [
-          "switch",
-          {"switch--disabled": !this.enabled}
-        ]
+        type: String
+      },
+      size: {
+        required: true,
+        type: String,
+        validator: value => ["tiny", "small", "medium", "big"].includes(value)
       }
     }
   }
 </script>
-
-<style>
-  .switch {
-    transition: 0.5s;
-    outline: none;
-  }
-
-  .switch--disabled {
-    opacity: 0.5;
-  }
-</style>

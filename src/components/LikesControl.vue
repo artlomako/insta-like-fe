@@ -1,6 +1,5 @@
 <template>
   <div class="likes-control">
-    <v-switch icon="heart.svg" :enabled="likes.enabled" @toggle="switchLikes"/>
     <counter :max="limits.likes" class="likes-control__number" :value="likes.number" @change="changeNumberOfLikes"
              :disabled="!likes.enabled"/>
     <counter :max="999" class="likes-control__number" :value="likes.period"
