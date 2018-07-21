@@ -35,6 +35,7 @@
     background: none;
     padding: 0;
     outline: none;
+    cursor: pointer;
   }
 
   .button--tiny {
