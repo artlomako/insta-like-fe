@@ -34,26 +34,20 @@
     align-items: center;
   }
 
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .home {
+      padding: 2rem 5% 0 5%;
+    }
+  }
+
   .switches {
     display: flex;
     justify-content: space-around;
     width: 100%;
     margin-top: 1rem;
     align-items: center;
-  }
-
-  .comments {
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s;
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
-  {
-    opacity: 0;
   }
 </style>
