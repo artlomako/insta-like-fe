@@ -1,7 +1,6 @@
 <template>
   <input :class="classes" :value="text" @input="$emit('input', $event.target.value)"
-         @change="$emit('change', $event.target.value)"
-         placeholder="Link do zdjęcia" :placeholder="placeholder"/>
+         @change="$emit('change', $event.target.value)" :placeholder="placeholder"/>
 </template>
 
 <script>
