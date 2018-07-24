@@ -46,6 +46,10 @@
     width: 100%;
   }
 
+  .text-field::-webkit-input-placeholder {
+    text-align: center;
+  }
+
   .text-field:focus {
     outline: none;
     background: none;
@@ -65,5 +69,4 @@
     border: none;
     font-size: 1rem;
   }
-
 </style>
