@@ -22,7 +22,7 @@
     background-color: #e6e8d3;
   }
 
-  #app * {
+  #app {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #2c3e50;
   }

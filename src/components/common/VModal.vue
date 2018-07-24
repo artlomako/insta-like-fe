@@ -1,7 +1,7 @@
 <template>
   <v-base-modal @close="$emit('close')">
     <div class="modal__header">
-      <p class="header__title">{{title}}</p>
+      <p class="modal__title">{{title}}</p>
     </div>
     <div class="modal__content">
       <slot/>
@@ -32,7 +32,7 @@
     background-color: #dddfcc;
   }
 
-  .header__title {
+  .modal__title {
     font-weight: bold;
     margin: 0.5rem 1rem;
   }

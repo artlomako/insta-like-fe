@@ -69,7 +69,6 @@
   .slider {
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
 
   .slider__details {

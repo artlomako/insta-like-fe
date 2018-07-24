@@ -15,7 +15,7 @@
       size: {
         required: true,
         type: String,
-        validator: value => ["tiny", "small", "medium", "big"].includes(value)
+        validator: value => ["small", "medium", "big"].includes(value)
       }
     },
     computed: {
@@ -38,19 +38,14 @@
     cursor: pointer;
   }
 
-  .button--tiny {
-    width: 1rem;
-    height: 1rem;
-  }
-
   .button--small {
     width: 1.3rem;
     height: 1.3rem;
   }
 
   .button--medium {
-    width: 2.3rem;
-    height: 2.3rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   .button--big {
