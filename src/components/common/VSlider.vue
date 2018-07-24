@@ -48,20 +48,6 @@
         this.$emit("change", newValue);
       }
     }
-    // watch: {
-    //   localValue(value) {
-    //     let newValue = Number.parseInt(value) || this.min;
-    //
-    //     if (newValue < this.min) {
-    //       newValue = this.min;
-    //     }
-    //     if (newValue > this.max) {
-    //       newValue = this.max;
-    //     }
-    //     this.localValue = newValue;
-    //     this.$emit("change", newValue);
-    //   }
-    // }
   }
 </script>
 
@@ -103,6 +89,7 @@
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    margin: 0;
   }
 
   .slider__control::-webkit-slider-thumb {
