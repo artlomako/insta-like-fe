@@ -6,7 +6,7 @@ import UsersAdmin from "./views/UsersAdmin.vue";
 import LimitsAdmin from "./views/LimitsAdmin.vue";
 import StatusModal from "./components/StatusModal";
 import LikesView from "./views/LikesView";
-import NewComments from "./components/NewComments";
+import CommentsView from "./views/CommentsView";
 
 Vue.use(Router);
 
@@ -29,7 +29,7 @@ const router = new Router({
         },
         {
           path: "comments",
-          component: NewComments,
+          component: CommentsView,
           children: [
             {
               path: "status",
