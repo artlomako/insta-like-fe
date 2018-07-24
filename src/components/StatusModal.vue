@@ -1,5 +1,5 @@
 <template>
-  <v-modal title="Aktualne procesy" @close="goBack">
+  <v-modal :title="title" @close="goBack">
     <v-list :items="listData"/>
   </v-modal>
 </template>
@@ -8,6 +8,7 @@
   import VModal from "./common/VModal";
   import VList from "./common/VList";
   import {apiFetchStatus} from "../api";
+  import {mapGetters} from "vuex";
 
   export default {
     name: "StatusModal",
@@ -22,11 +23,16 @@
       }
     },
     computed: {
+      ...mapGetters("worker", {workerMode: "mode"}),
       listData() {
         return this.processes.map(process => ({
           id: process.hash,
           text: process.url + "<br/>" + this.remainingText(process)
         }));
+      },
+      title() {
+        const suffix = this.workerMode === "LIKES" ? "polubień" : "komentarzy";
+        return "Status " + suffix;
       }
     },
     methods: {

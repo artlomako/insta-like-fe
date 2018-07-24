@@ -1,5 +1,8 @@
 <template>
-  <p>Comments component</p>
+  <div>
+    <p>Comments component</p>
+    <router-view/>
+  </div>
 </template>
 
 <script>
