@@ -57,6 +57,13 @@ export const invalidPhotoUrl = () => {
   });
 };
 
+export const emptyPhotoUrl = () => {
+  emit({
+    text: "Link do zdjęcia nie może być pusty",
+    icon: "warning.svg"
+  });
+};
+
 export const error = () => {
   emit({
     text: "Wystąpił nieoczekiwany błąd",

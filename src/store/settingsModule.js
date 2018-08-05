@@ -3,7 +3,6 @@ import {apiGetLimits, apiSubmitLimits} from "../api";
 export default {
   namespaced: true,
   state: {
-    photoUrl: "",
     adminPassword: "",
     likes: {
       number: 0,
@@ -20,20 +19,7 @@ export default {
       comments: 0
     }
   },
-  getters: {
-    photoUrlValid({photoUrl}) {
-      return (
-          photoUrl.trim().length === 0 ||
-          /^(https?:\/\/)?(www\.)?instagram\.com\/.+/.test(
-              photoUrl.trim().toLowerCase()
-          )
-      );
-    },
-  },
   mutations: {
-    changePhotoUrl(state, newUrl) {
-      state.photoUrl = newUrl;
-    },
     switchLikes({likes}) {
       likes.enabled = !likes.enabled;
     },
