@@ -35,17 +35,7 @@
   .home {
     display: flex;
     flex-direction: column;
-    padding: 2rem 17% 0 17%;
     align-items: center;
-  }
-
-  @media only screen
-  and (min-device-width: 320px)
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-    .home {
-      padding: 2rem 5% 0 5%;
-    }
   }
 
   .switches {

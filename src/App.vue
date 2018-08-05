@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <the-header/>
-    <router-view/>
+    <div class="main-view">
+      <router-view/>
+    </div>
     <message-dialog/>
   </div>
 </template>
@@ -28,4 +30,18 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #2c3e50;
   }
+
+  .main-view {
+    padding: 2rem 17% 0 17%;
+  }
+
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .main-view {
+      padding: 2rem 5% 0 5%;
+    }
+  }
+
 </style>
