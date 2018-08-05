@@ -15,6 +15,7 @@ const router = new Router({
   routes: [
     {
       path: "/",
+      redirect: "/likes",
       component: Home,
       children: [
         {

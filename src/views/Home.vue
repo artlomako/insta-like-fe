@@ -3,7 +3,7 @@
     <photo-url-input/>
     <div class="switches">
       <router-link :to="$route.path + '/status'">
-        <v-button icon="info.svg" size="big" @c/>
+        <v-button icon="info.svg" size="big"/>
       </router-link>
       <mode-selector/>
     </div>

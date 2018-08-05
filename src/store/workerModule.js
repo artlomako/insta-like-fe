@@ -1,11 +1,13 @@
 import comments from "./workerCommentsModule";
+import likes from "./workerLikesModule";
 
 const MODES = ["LIKES", "COMMENTS"];
 
 export default {
   namespaced: true,
   modules: {
-    comments
+    comments,
+    likes
   },
   state: {
     modeIdx: 0,
