@@ -1,3 +1,5 @@
+import * as messageBus from "../messageBus";
+
 export default {
   namespaced: true,
   state: {
@@ -6,6 +8,11 @@ export default {
   mutations: {
     changeActionsCount(state, actionsCount) {
       state.actionsCount = actionsCount;
+    }
+  },
+  actions: {
+    start() {
+      messageBus.likesStarted();
     }
   }
 };

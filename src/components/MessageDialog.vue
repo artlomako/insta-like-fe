@@ -1,64 +1,29 @@
 <template>
-  <v-dialog v-show="show" :text="message" :icon="icon" @close="hide"/>
+  <v-dialog v-if="event" :text="event.text" :icon="event.icon" @close="hide"/>
 </template>
 
 <script>
-  import {mapState, mapMutations} from "vuex";
   import VDialog from "./common/VDialog";
+  import {subscribe} from "../messageBus";
 
   export default {
     name: "MessageDialog",
     components: {VDialog},
     data() {
       return {
-        message: "",
-        icon: undefined,
-        show: false
+        event: undefined
       }
     },
-    computed: {
-      ...mapState("service", ["status"]),
-      ...mapState("settings", ["photoUrl"]),
-      ...mapMutations("service", ["setStatus"])
+    mounted() {
+      subscribe(this.show);
     },
     methods: {
+      show(event) {
+        this.event = event;
+      },
       hide() {
-        this.show = false;
-      }
-    },
-    watch: {
-      status({value}) {
-        this.icon = "warning.svg";
-        switch (value) {
-          case "OK":
-            this.message = "Uruchomiono. Akcje ruszą do 5 minut.";
-            this.icon = "deal.svg";
-            break;
-          case "UNAUTHORIZED":
-            this.message = "Użytkownik, który udostępnił zdjęcie nie ma dostępu do serwisu";
-            break;
-          case "API_UNAVAILABLE":
-            this.message = "Brak połączenia z serwisem";
-            break;
-          case "ALREADY_PROCESSING":
-            this.message = "Zdjęcie już jest w trakcie przetwarzania";
-            break;
-          case "NO_COMMENTS":
-            this.message = "Nie dodano komentarzy";
-            break;
-          case "INVALID_PHOTO_URL":
-            this.message = "Niepoprawny link do zdjęcia";
-            break;
-          case "NO_OPTION_CHOSEN":
-            this.message = "Wybierz przynajmniej jedną opcję: <strong>Like</strong> lub <strong>Komentarz</strong>";
-            break;
-          case "ERROR":
-            this.message = "Wystąpił nieoczekiwany błąd";
-            break;
-        }
-        this.show = true;
+        this.event = undefined;
       }
     }
   }
-
 </script>

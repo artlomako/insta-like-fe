@@ -1,3 +1,5 @@
+import * as messageBus from "../messageBus";
+
 export default {
   namespaced: true,
   state: {
@@ -70,6 +72,13 @@ export default {
         context.commit("clearEditingComment");
       }
       context.commit("deleteComment", comment);
+    },
+    start(context) {
+      if (context.state.items.length === 0) {
+        messageBus.noComments();
+      }else{
+        messageBus.commentsStarted();
+      }
     }
   }
 };

@@ -2,15 +2,17 @@
   <div id="app">
     <the-header/>
     <router-view/>
+    <message-dialog/>
   </div>
 </template>
 
 <script>
   import TheHeader from "./components/TheHeader";
+  import MessageDialog from "./components/MessageDialog";
 
   export default {
     name: "App",
-    components: {TheHeader}
+    components: {MessageDialog, TheHeader}
   };
 </script>
 

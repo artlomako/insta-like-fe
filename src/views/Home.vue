@@ -5,6 +5,7 @@
       <router-link :to="$route.path + '/status'">
         <v-button icon="info.svg" size="big"/>
       </router-link>
+      <v-button icon="start.svg" size="big" @click="start"/>
       <mode-selector/>
     </div>
     <router-view></router-view>
@@ -15,6 +16,7 @@
   import PhotoUrlInput from "@/components/PhotoUrlInput";
   import VButton from "@/components/common/VButton";
   import ModeSelector from "@/components/ModeSelector";
+  import {mapActions} from "vuex";
 
   export default {
     name: "home",
@@ -22,6 +24,9 @@
       ModeSelector,
       VButton,
       PhotoUrlInput,
+    },
+    methods: {
+      ...mapActions("worker", ["start"])
     }
   }
 </script>
