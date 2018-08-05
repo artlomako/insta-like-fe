@@ -18,9 +18,6 @@ export default {
     mode(state) {
       return MODES[state.modeIdx];
     },
-    status(state) {
-      console.log(state)
-    },
     photoUrlValid({photoUrl}) {
       return (
           photoUrl.trim().length === 0 ||
