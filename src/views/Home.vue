@@ -2,7 +2,7 @@
   <div class="home">
     <photo-url-input/>
     <div class="switches">
-      <router-link :to="$route.path + '/status'">
+      <router-link to="status" append>
         <v-button icon="info.svg" size="big"/>
       </router-link>
       <v-button icon="start.svg" size="big" @click="start"/>

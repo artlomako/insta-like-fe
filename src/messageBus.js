@@ -70,3 +70,10 @@ export const error = () => {
     icon: "warning.svg"
   });
 };
+
+export const invalidPassword = () => {
+  emit({
+    text: "Wprowadzono złe hasło",
+    icon: "warning.svg"
+  });
+};

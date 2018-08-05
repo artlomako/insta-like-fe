@@ -1,5 +1,5 @@
 <template>
-  <v-base-modal @close="$emit('close')">
+  <v-base-modal @close="$emit('close')" :flex="flex">
     <div class="modal__header">
       <p class="modal__title">{{title}}</p>
     </div>
@@ -21,8 +21,13 @@
       title: {
         required: true,
         type: String
+      },
+      flex: {
+        required: false,
+        type: Boolean,
+        default: false
       }
-    },
+    }
   }
 </script>
 

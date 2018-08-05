@@ -1,6 +1,12 @@
 <template>
-  <input :class="classes" :value="text" @input="$emit('input', $event.target.value)"
-         @change="$emit('change', $event.target.value)" :placeholder="placeholder"/>
+  <input
+    :class="classes"
+    :value="text"
+    @input="$emit('input', $event.target.value)"
+    @change="$emit('change', $event.target.value)"
+    :placeholder="placeholder"
+    :type="secured ? 'password' : 'text'"
+  />
 </template>
 
 <script>
@@ -24,6 +30,11 @@
       placeholder: {
         required: true,
         type: String
+      },
+      secured: {
+        required: false,
+        type: Boolean,
+        default: false
       }
     },
     computed: {

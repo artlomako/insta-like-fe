@@ -1,13 +1,32 @@
 <template>
-  <div class="header">
+  <div class="header" @click="onClick">
     <img class="header__logo" src="logo.svg">
-    <h1 class="header__title">InstaLike</h1>
+    <h1 class="header__title">{{text}}</h1>
   </div>
 </template>
 
 <script>
   export default {
-    name: "TheHeader"
+    name: "TheHeader",
+    computed: {
+      isAdminRoute() {
+        return this.$route.path.includes("/admin");
+      },
+      text() {
+        let text = "InstaLike";
+        if (this.isAdminRoute) {
+          text += " Admin";
+        }
+        return text;
+      }
+    },
+    methods: {
+      onClick() {
+        if (this.isAdminRoute) {
+          this.$router.push("/");
+        }
+      }
+    }
   };
 </script>
 
@@ -19,6 +38,7 @@
     align-items: center;
     background-color: #006d8e;
     box-shadow: 0 3px 4px 2px #006d8e;
+    cursor: pointer;
   }
 
   .header__logo {

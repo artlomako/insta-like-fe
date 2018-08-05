@@ -16,13 +16,19 @@
         required: true,
         type: String,
         validator: value => ["small", "medium", "big"].includes(value)
+      },
+      disabled: {
+        required: false,
+        type: Boolean,
+        default: false
       }
     },
     computed: {
       classes() {
         return [
           "button",
-          "button--" + this.size
+          "button--" + this.size,
+          {"button--disabled": this.disabled}
         ]
       }
     }
@@ -56,5 +62,9 @@
   .button__icon {
     width: 100%;
     height: 100%;
+  }
+
+  .button--disabled {
+    opacity: 0.5;
   }
 </style>
