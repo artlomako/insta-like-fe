@@ -1,5 +1,5 @@
 <template>
-  <p class="list__no-data" v-if="items.length === 0">Brak danych</p>
+  <p class="list__no-data" v-if="items.length === 0">{{emptyMessage}}</p>
   <ul v-else class="list">
     <li :class="itemClasses(item)" v-for="item in items" :key="item.id" @click.self="onSelect && onSelect(item)">
       <span class="item__text" @click.self="onSelect && onSelect(item)" v-html="item.text"></span>
@@ -27,9 +27,10 @@
         type: Function,
         required: false
       },
-      isSelected: {
-        type: Function,
-        required: false
+      emptyMessage: {
+        type: String,
+        required: false,
+        default: "Brak danych"
       }
     },
     methods: {
@@ -37,7 +38,7 @@
         return [
           "list__item",
           {
-            "list__item--selected": this.isSelected && this.isSelected(item),
+            "list__item--selected": item.selected,
             "list__item--hoverable": this.onSelect
           }
         ];
@@ -58,6 +59,8 @@
 
   .list__no-data {
     text-align: center;
+    color: #848675;
+    font-weight: 400;
   }
 
   .list__item {
