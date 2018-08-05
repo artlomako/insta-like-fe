@@ -15,6 +15,9 @@ export default {
   getters: {
     mode(state) {
       return MODES[state.modeIdx];
+    },
+    status(state) {
+      console.log(state)
     }
   },
   mutations: {

@@ -55,8 +55,4 @@ const router = new Router({
   ]
 });
 
-router.afterEach((to, from) => {
-  sessionStorage.setItem("lastVisitedRoute", from.path);
-});
-
 export default router;

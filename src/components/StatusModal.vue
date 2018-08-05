@@ -50,8 +50,10 @@
         return "<strong>" + text + "</strong>";
       },
       goBack() {
-        const location = sessionStorage.getItem("lastVisitedRoute") || "";
-        this.$router.push(location);
+        const path = this.$router.currentRoute.path;
+        const lastSeparator = path.lastIndexOf("/");
+        const previousPath = path.substr(0, lastSeparator);
+        this.$router.push(previousPath);
       }
     },
     components: {
