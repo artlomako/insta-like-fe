@@ -8,7 +8,7 @@
   import VList from "./common/VList";
   import VModal from "./common/VModal";
   import {apiFetchDefaultComments} from "../api";
-  import {mapActions} from "vuex";
+  import {mapMutations} from "vuex";
 
   export default {
     name: "DefaultCommentList",
@@ -21,9 +21,9 @@
       apiFetchDefaultComments().then(comments => this.comments = comments);
     },
     methods: {
-      ...mapActions("comments", ["submitComment"]),
+      ...mapMutations("worker/comments", ["addComment"]),
       onCommentClick(comment) {
-        this.submitComment(comment);
+        this.addComment(comment);
         this.$emit('close');
       }
     },

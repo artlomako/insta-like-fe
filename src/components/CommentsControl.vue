@@ -14,17 +14,6 @@
     components: {
       CommentEditor,
       CommentList
-    }
+    },
   };
 </script>
-
-<style>
-  .editor {
-    width: 100%;
-  }
-
-  .editor__list {
-    flex-grow: 1;
-    overflow: auto;
-  }
-</style>

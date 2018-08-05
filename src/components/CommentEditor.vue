@@ -1,15 +1,16 @@
 <template>
   <div>
-    <div class="editor">
-      <v-text-field :text="editingComment.text"
-                    @change="changeEditingCommentText"
+    <div class="comment-editor">
+      <v-text-field class="comment-editor__text-field"
+                    :text="editingComment.text"
+                    @input="changeEditingCommentText"
                     type="secondary"
                     placeholder="Treść komentarza"
-                    @keyup.enter="onSubmit"></v-text-field>
-      <div class="editor__buttons">
-        <v-button size="tiny" @click="onSubmit" :icon="`${submitButtonIcon}.svg`"/>
-        <v-button size="tiny" @click="showDefaultComments=true" icon="search.svg"/>
-      </div>
+                    @keyup.enter="submitComment"
+      />
+      <v-button v-show="this.editorActive" size="medium" :icon="`${submitButtonIcon}.svg`"
+                @click="submitComment"/>
+      <v-button v-show="!this.editorActive" size="medium" icon="search.svg" @click="showDefaultComments=true"/>
     </div>
     <default-comment-list v-if="showDefaultComments" @close="showDefaultComments=false"/>
   </div>
@@ -17,12 +18,14 @@
 
 <script>
   import VButton from "./common/VButton";
+  import VList from "./common/VList";
   import VTextField from "./common/VTextField";
   import DefaultCommentList from "./DefaultCommentList";
 
   import {createNamespacedHelpers} from "vuex";
 
-  const {mapState, mapActions, mapMutations} = createNamespacedHelpers("comments");
+  const {mapMutations, mapState, mapActions} = createNamespacedHelpers("worker/comments");
+
   export default {
     name: "CommentEditor",
     data() {
@@ -33,37 +36,33 @@
     computed: {
       ...mapState(["editingComment"]),
       submitButtonIcon() {
-        return !this.editingComment.id ? "plus" : "check";
+        return typeof this.editingComment.id === "undefined" ? "plus" : "check";
+      },
+      editorActive() {
+        return this.editingComment.text.length > 0;
       }
     },
     methods: {
-      onSubmit() {
-        if (this.editingComment.text.trim().length > 0) {
-          this.submitEditingComment();
-        }
-      },
-      ...mapMutations(["changeEditingCommentText"]),
-      ...mapActions(["submitEditingComment"])
+      ...mapActions(["submitComment"]),
+      ...mapMutations(["changeEditingCommentText"])
     },
     components: {
       VButton,
       DefaultCommentList,
-      VTextField
+      VTextField,
+      VList
     }
   };
 </script>
 
-<style scoped>
-  .editor {
+<style>
+  .comment-editor {
     display: flex;
     flex-direction: row;
     width: 100%;
   }
 
-  .editor__buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-left: 0.5rem;
+  .comment-editor__text-field {
+    margin-right: 0.5rem;
   }
 </style>

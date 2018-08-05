@@ -1,9 +1,14 @@
+import comments from "./workerCommentsModule";
+
 const MODES = ["LIKES", "COMMENTS"];
 
 export default {
   namespaced: true,
+  modules: {
+    comments
+  },
   state: {
-    modeIdx: 0
+    modeIdx: 0,
   },
   getters: {
     mode(state) {
