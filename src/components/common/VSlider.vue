@@ -31,6 +31,14 @@
         type: Number,
       }
     },
+    mounted() {
+      if (this.value < this.min) {
+        this.$emit("change", this.min);
+      }
+      if (this.value > this.max) {
+        this.$emit("change", this.max);
+      }
+    },
     data() {
       return {localValue: this.value}
     },

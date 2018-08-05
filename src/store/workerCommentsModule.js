@@ -6,7 +6,9 @@ export default {
     editingComment: {
       id: undefined,
       text: ""
-    }
+    },
+    actionsCount: 50,
+    timeInterval: 0
   },
   getters: {
     items(state) {
@@ -38,6 +40,12 @@ export default {
     deleteComment(state, comment) {
       const index = state.items.findIndex(c => c.id === comment.id);
       state.items.splice(index, 1);
+    },
+    changeActionsCount(state, actionsCount) {
+      state.actionsCount = actionsCount;
+    },
+    changeTimeInterval(state, timeInterval) {
+      state.timeInterval = timeInterval;
     }
   },
   actions: {
