@@ -24,7 +24,7 @@
       ...mapMutations("worker/comments", ["addComment"]),
       onCommentClick(comment) {
         this.addComment(comment);
-        this.$emit('close');
+        this.$emit("close");
       }
     },
     computed: {

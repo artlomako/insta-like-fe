@@ -27,7 +27,7 @@ export const apiSubmitUsers = (password, users) => (
       method: "POST",
       credentials,
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
         "Admin-Password": password
       },
       body: JSON.stringify(users)
@@ -40,7 +40,7 @@ export const apiStart = (body) => (
       method: "POST",
       credentials,
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json"
       },
       body: JSON.stringify(body)
     })
@@ -51,7 +51,7 @@ export const apiSubmitDefaultComments = (password, comments) => (
       method: "POST",
       credentials,
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
         "Admin-Password": password
       },
       body: JSON.stringify(comments)
@@ -79,7 +79,7 @@ export const apiSubmitLimits = (password, limits) => (
       method: "POST",
       credentials,
       headers: {
-        'content-type': 'application/json',
+        "Content-Type": "application/json",
         "Admin-Password": password
       },
       body: JSON.stringify(limits)
