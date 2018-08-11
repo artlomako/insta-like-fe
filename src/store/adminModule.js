@@ -1,13 +1,30 @@
-import {invalidPassword} from "../messageBus";
+import likes from "./adminLikesModule";
+import users from "./adminUsersModule";
+import comments from "./adminCommentsModule";
+import router from "../router";
+import {authorizationError} from "../messageBus";
 
 export default {
   namespaced: true,
+  modules: {
+    likes,
+    users,
+    comments
+  },
   state: {
     authentication: {
       authorized: false,
       password: ""
     },
-    mode: "COMMENTS"
+    mode: "LIKES"
+  },
+  getters: {
+    currentModule(state) {
+      return state.mode.toLowerCase();
+    },
+    synchronized(state, getters) {
+      return state[getters.currentModule].synchronized;
+    }
   },
   mutations: {
     setAuthentication(state, authentication) {
@@ -18,7 +35,26 @@ export default {
     }
   },
   actions: {
+    async submit(context) {
+      const currentModule = context.getters.currentModule;
+      const response = await context.dispatch(currentModule + "/submit");
+      if (response.status === 401) {
+        authorizationError();
+        router.push("/admin/login");
+        return;
+      }
+      if (response.status === 200) {
+        context.dispatch("fetch");
+      }
+    },
+    fetch(context) {
+      const currentModule = context.getters.currentModule;
+      context.dispatch(currentModule + "/fetch");
+    },
     authenticate(context, password) {
+      if (!password) {
+        password = context.state.authentication.password;
+      }
       return fetch("http://localhost:3000/api/authenticate", {
         method: "POST", headers: {
           "Content-Type": "application/json",
@@ -33,13 +69,12 @@ export default {
           return true;
         } else {
           context.commit("setAuthentication", {
-            password: undefined,
+            password: "",
             authorized: false
           });
-          invalidPassword();
           return false;
         }
       });
-    }
+    },
   }
 };

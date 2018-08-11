@@ -77,3 +77,10 @@ export const invalidPassword = () => {
     icon: "warning.svg"
   });
 };
+
+export const authorizationError = () => {
+  emit({
+    text: "Brak uprawnień. Zaloguj się ponownie",
+    icon: "warning.svg"
+  });
+};

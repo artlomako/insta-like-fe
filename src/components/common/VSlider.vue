@@ -55,6 +55,11 @@
         this.localValue = newValue;
         this.$emit("change", newValue);
       }
+    },
+    watch: {
+      value(newVal) {
+        this.localValue = newVal;
+      }
     }
   }
 </script>

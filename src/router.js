@@ -2,23 +2,23 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import AdminView from "./views/AdminView.vue";
-import AdminCommentsView from "./views/AdminCommentsView.vue";
 import AdminLikesView from "./views/AdminLikesView.vue";
-import AdminUsersView from "./views/AdminUsersView.vue";
 import StatusModal from "./components/StatusModal";
 import LikesView from "./views/LikesView";
 import CommentsView from "./views/CommentsView";
 import AdminLoginView from "./views/AdminLoginView";
+import AdminUsersView from "./views/AdminUsersView";
+import AdminCommentsView from "./views/AdminCommentsView";
 import store from "./store";
 
 Vue.use(Router);
 
-const checkAuthentication = (to, from, next) => {
-  const authorized = store.state.admin.authentication.authorized;
-  if (authorized) {
-    next();
+const securityCheck = async (to, from, next) => {
+  const authorized = await store.dispatch("admin/authenticate");
+  if (!authorized) {
+    next("/admin/login");
   } else {
-    next("/admin/login")
+    next();
   }
 };
 
@@ -26,7 +26,6 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      redirect: "/likes",
       component: Home,
       children: [
         {
@@ -57,25 +56,25 @@ const router = new Router({
       component: AdminView,
       children: [
         {
-          path: "login",
-          component: AdminLoginView
-        },
-        {
-          path: "comments",
-          component: AdminCommentsView,
-          beforeEnter: checkAuthentication
-        },
-        {
           path: "likes",
           component: AdminLikesView,
-          beforeEnter: checkAuthentication
+          beforeEnter: securityCheck
         },
         {
           path: "users",
           component: AdminUsersView,
-          beforeEnter: checkAuthentication
+          beforeEnter: securityCheck
+        },
+        {
+          path: "comments",
+          component: AdminCommentsView,
+          beforeEnter: securityCheck
         }
       ]
+    },
+    {
+      path: "/admin/login",
+      component: AdminLoginView
     }
   ]
 });

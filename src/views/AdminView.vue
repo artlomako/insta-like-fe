@@ -3,21 +3,27 @@
     <div class="admin-switches">
       <v-button
         icon="comment.svg"
-        size="big"
-        :disabled="mode !== 'COMMENTS'"
+        size="medium"
         @click="onChangeMode('COMMENTS')"
+        :class="buttonStyle('COMMENTS')"
       />
       <v-button
         icon="heart.svg"
-        size="big"
-        :disabled="mode !== 'LIKES'"
+        size="medium"
         @click="onChangeMode('LIKES')"
+        :class="buttonStyle('LIKES')"
       />
       <v-button
         icon="users.svg"
-        size="big"
-        :disabled="mode !== 'USERS'"
+        size="medium"
         @click="onChangeMode('USERS')"
+        :class="buttonStyle('USERS')"
+      />
+      <v-button
+        icon="check.svg"
+        size="medium"
+        :disabled="synchronized"
+        @click="submit"
       />
     </div>
     <router-view/>
@@ -30,7 +36,7 @@
   import VTextField from "@/components/common/VTextField";
   import {createNamespacedHelpers} from "vuex";
 
-  const {mapState, mapMutations} = createNamespacedHelpers("admin");
+  const {mapState, mapGetters, mapMutations, mapActions} = createNamespacedHelpers("admin");
 
   export default {
     name: "AdminView",
@@ -40,16 +46,22 @@
     },
     methods: {
       ...mapMutations(["changeMode"]),
+      ...mapActions(["submit"]),
       onSubmit(e) {
         e.preventDefault();
       },
       onChangeMode(newMode) {
-        this.changeMode(newMode.toUpperCase());
         this.$router.push("/admin/" + newMode.toLowerCase());
+      },
+      buttonStyle(buttonMode) {
+        return {
+          "admin-view__switch--inactive": this.mode !== buttonMode
+        };
       }
     },
     computed: {
-      ...mapState(["mode"])
+      ...mapState(["mode"]),
+      ...mapGetters(["synchronized"])
     }
   }
 </script>
@@ -59,7 +71,11 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
     align-items: center;
+  }
+
+  .admin-view__switch--inactive {
+    opacity: 0.5;
   }
 </style>

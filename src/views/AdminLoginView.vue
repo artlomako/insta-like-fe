@@ -23,6 +23,7 @@
   import VButton from "@/components/common/VButton";
   import VTextField from "@/components/common/VTextField";
 
+  import {invalidPassword} from "../messageBus";
   import {createNamespacedHelpers} from "vuex";
 
   const {mapActions} = createNamespacedHelpers("admin");
@@ -44,6 +45,8 @@
         this.authenticate(this.password).then(authenticated => {
           if (authenticated) {
             this.$router.push("/admin")
+          } else {
+            invalidPassword();
           }
         });
       }

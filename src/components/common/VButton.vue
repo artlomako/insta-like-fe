@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" @click="$emit('click')">
+  <button :class="classes" @click="onSubmit">
     <img class="button__icon" :src="icon"/>
   </button>
 </template>
@@ -30,6 +30,13 @@
           "button--" + this.size,
           {"button--disabled": this.disabled}
         ]
+      }
+    },
+    methods: {
+      onSubmit() {
+        if (!this.disabled) {
+          this.$emit("click");
+        }
       }
     }
   }
