@@ -1,4 +1,5 @@
 import * as messageBus from "../messageBus";
+import {fetchCommentsLimits as apiFetchLimits} from "../api/worker";
 
 export default {
   namespaced: true,
@@ -10,7 +11,13 @@ export default {
       text: ""
     },
     actionsCount: 50,
-    timeInterval: 0
+    timeInterval: 0,
+    limits: {
+      minActionsCount: 0,
+      maxActionsCount: 50,
+      minTimeInterval: 0,
+      maxTimeInterval: 50
+    }
   },
   getters: {
     items(state) {
@@ -48,6 +55,9 @@ export default {
     },
     changeTimeInterval(state, timeInterval) {
       state.timeInterval = timeInterval;
+    },
+    changeLimits(state, limits) {
+      state.limits = limits;
     }
   },
   actions: {
@@ -76,8 +86,16 @@ export default {
     start(context) {
       if (context.state.items.length === 0) {
         messageBus.noComments();
-      }else{
+      } else {
         messageBus.commentsStarted();
+      }
+    },
+    async fetchLimits(context) {
+      const response = await apiFetchLimits();
+      if (response.status === 200) {
+        context.commit("changeLimits", await response.json());
+      } else {
+        messageBus.error();
       }
     }
   }

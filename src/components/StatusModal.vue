@@ -7,15 +7,15 @@
 <script>
   import VModal from "./common/VModal";
   import VList from "./common/VList";
-  import {apiFetchStatus} from "../api";
+  import {fetchLikesStatus} from "../api/worker";
   import {mapGetters} from "vuex";
 
   export default {
     name: "StatusModal",
     mounted() {
-      apiFetchStatus().then(response => {
-        this.processes = response
-      });
+      if (this.workerMode === "LIKES") {
+        fetchLikesStatus().then(response => response.json()).then(data => this.processes = data);
+      }
     },
     data() {
       return {
@@ -33,20 +33,17 @@
       title() {
         const suffix = this.workerMode === "LIKES" ? "polubień" : "komentarzy";
         return "Status " + suffix;
+      },
+      modeIcon() {
+        return this.workerMode === "LIKES" ? "\uD83D\uDC4D" : "\uD83D\uDCAC";
       }
     },
     methods: {
       remainingText(process) {
-        if (!process.remainingLikes && !process.remainingComments) {
+        if (!process.remaining) {
           return "Zakończono";
         }
-        let text = "Pozostało: ";
-        if (process.remainingLikes) {
-          text += process.remainingLikes + " \uD83D\uDC4D";
-        }
-        if (process.remainingComments) {
-          text += process.remainingComments + " \uD83D\uDCAC";
-        }
+        let text = "Pozostało " + process.remaining + " " + this.modeIcon;
         return "<strong>" + text + "</strong>";
       },
       goBack() {

@@ -7,7 +7,7 @@
 <script>
   import VList from "./common/VList";
   import VModal from "./common/VModal";
-  import {apiFetchDefaultComments} from "../api";
+  import {fetchDefaultComments as apiFetchDefaultComments} from "../api/worker";
   import {mapMutations} from "vuex";
 
   export default {
@@ -18,7 +18,7 @@
       };
     },
     mounted() {
-      apiFetchDefaultComments().then(comments => this.comments = comments);
+      apiFetchDefaultComments().then(r => r.json()).then(comments => this.comments = comments);
     },
     methods: {
       ...mapMutations("worker/comments", ["addComment"]),

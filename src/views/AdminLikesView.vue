@@ -1,18 +1,25 @@
 <template>
   <div>
-    <v-slider
-      class="admin-likes__slider"
-      title="Minimalna liczba polubień:"
-      :max="9999"
-      :value="settings.minActionsCount"
-      @change="minActionsCount => changeSettings({minActionsCount})"
+    <v-text-field
+      class="admin-likes__control"
+      :text="settings.serviceId"
+      @input="changeServiceId"
+      type="secondary"
+      placeholder="Numer usługi Followiz"
     />
     <v-slider
-      class="admin-likes__slider"
+      class="admin-likes__control"
+      title="Minimalna liczba polubień:"
+      :max="9999"
+      :value="settings.limits.minActionsCount"
+      @change="minActionsCount => changeLimits({minActionsCount})"
+    />
+    <v-slider
+      class="admin-likes__control"
       title="Maksymalna liczba polubień:"
       :max="9999"
-      :value="settings.maxActionsCount"
-      @change="maxActionsCount => changeSettings({maxActionsCount})"
+      :value="settings.limits.maxActionsCount"
+      @change="maxActionsCount => changeLimits({maxActionsCount})"
     />
   </div>
 </template>
@@ -21,6 +28,7 @@
   import VSlider from "../components/common/VSlider";
 
   import {createNamespacedHelpers} from "vuex";
+  import VTextField from "../components/common/VTextField";
 
   const {mapState, mapMutations, mapActions} = createNamespacedHelpers("admin/likes");
 
@@ -28,6 +36,7 @@
   export default {
     name: "AdminLikesView",
     components: {
+      VTextField,
       VSlider
     },
     computed: {
@@ -35,7 +44,7 @@
     },
     methods: {
       ...mapActions(["fetchSettings"]),
-      ...mapMutations(["changeSettings"]),
+      ...mapMutations(["changeServiceId", "changeLimits"]),
     },
     mounted() {
       this.$store.commit("admin/changeMode", "LIKES");
@@ -45,7 +54,7 @@
 </script>
 
 <style>
-  .admin-likes__slider {
+  .admin-likes__control {
     margin-bottom: 0.5rem;
   }
 </style>

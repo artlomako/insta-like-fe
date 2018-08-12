@@ -1,25 +1,32 @@
 <template>
   <div>
-    <v-text-field
-      class="admin-comments__control"
-      :text="settings.serviceId.toString()"
-      @input="changeServiceId"
-      type="secondary"
-      placeholder="Numer usługi Followiz"
-    />
     <v-slider
       class="admin-comments__control"
       title="Minimalna liczba komentarzy:"
       :max="9999"
-      :value="settings.minActionsCount"
-      @change="minActionsCount => changeSettings({minActionsCount})"
+      :value="settings.limits.minActionsCount"
+      @change="minActionsCount => changeLimits({minActionsCount})"
     />
     <v-slider
       class="admin-comments__control"
       title="Maksymalna liczba komentarzy:"
       :max="9999"
-      :value="settings.maxActionsCount"
-      @change="maxActionsCount => changeSettings({maxActionsCount})"
+      :value="settings.limits.maxActionsCount"
+      @change="maxActionsCount => changeLimits({maxActionsCount})"
+    />
+    <v-slider
+      class="admin-comments__control"
+      title="Minimalny odstęp czasu:"
+      :max="9999"
+      :value="settings.limits.minTimeInterval"
+      @change="minTimeInterval => changeLimits({minTimeInterval})"
+    />
+    <v-slider
+      class="admin-comments__control"
+      title="Maksymalny odstęp czasu:"
+      :max="9999"
+      :value="settings.limits.maxTimeInterval"
+      @change="maxTimeInterval => changeLimits({maxTimeInterval})"
     />
     <div class="admin-comments__comment-editor">
       <v-text-field
@@ -75,7 +82,7 @@
     },
     methods: {
       ...mapActions(["fetchSettings"]),
-      ...mapMutations(["changeSettings", "deleteComment", "addComment", "changeServiceId"]),
+      ...mapMutations(["changeLimits", "deleteComment", "addComment", "changeServiceId"]),
       changeComment(comment) {
         this.comment = comment;
       },

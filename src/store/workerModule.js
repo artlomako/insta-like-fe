@@ -37,7 +37,8 @@ export default {
   },
   actions: {
     start(context) {
-      if (context.state.photoUrl.length === 0) {
+      const photoUrl = context.state.photoUrl;
+      if (photoUrl.length === 0) {
         messageBus.emptyPhotoUrl();
         return;
       }
@@ -45,12 +46,8 @@ export default {
         messageBus.invalidPhotoUrl();
         return;
       }
-      if (context.getters.mode === "LIKES") {
-        context.dispatch("likes/start");
-      }
-      if (context.getters.mode === "COMMENTS") {
-        context.dispatch("comments/start");
-      }
+      const action = context.getters.mode.toLowerCase() + "/start";
+      context.dispatch(action, photoUrl);
     }
   }
 };

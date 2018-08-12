@@ -2,8 +2,8 @@
   <div class="likes-view">
     <v-slider
       title="Liczba akcji:"
-      :min="50"
-      :max="2000"
+      :min="limits.minActionsCount"
+      :max="limits.maxActionsCount"
       :value="actionsCount"
       @change="changeActionsCount"
     />
@@ -15,7 +15,7 @@
   import VSlider from "@/components/common/VSlider";
   import {createNamespacedHelpers} from "vuex";
 
-  const {mapState, mapMutations} = createNamespacedHelpers("worker/likes");
+  const {mapState, mapMutations, mapActions} = createNamespacedHelpers("worker/likes");
 
   export default {
     name: "LikesView",
@@ -23,10 +23,14 @@
       VSlider
     },
     computed: {
-      ...mapState(["actionsCount"])
+      ...mapState(["actionsCount", "limits"])
     },
     methods: {
-      ...mapMutations(["changeActionsCount"])
+      ...mapMutations(["changeActionsCount"]),
+      ...mapActions(["fetchLimits"])
+    },
+    mounted() {
+      this.fetchLimits();
     }
   }
 </script>

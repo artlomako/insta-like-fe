@@ -3,15 +3,16 @@
     <v-slider
       class="comments-view__slider"
       title="Liczba akcji:"
-      :min="50"
-      :max="2000"
+      :min="limits.minActionsCount"
+      :max="limits.maxActionsCount"
       :value="actionsCount"
       @change="changeActionsCount"
     />
     <v-slider
       class="comments-view__slider"
       title="Odstęp czasowy (sek):"
-      :max="100"
+      :min="limits.minTimeInterval"
+      :max="limits.maxTimeInterval"
       :value="timeInterval"
       @change="changeTimeInterval"
     />
@@ -25,7 +26,7 @@
   import CommentsControl from "@/components/CommentsControl";
   import {createNamespacedHelpers} from "vuex";
 
-  const {mapState, mapMutations} = createNamespacedHelpers("worker/comments");
+  const {mapState, mapMutations, mapActions} = createNamespacedHelpers("worker/comments");
 
   export default {
     name: "CommentsView",
@@ -34,10 +35,14 @@
       VSlider
     },
     computed: {
-      ...mapState(["actionsCount", "timeInterval"])
+      ...mapState(["actionsCount", "timeInterval", "limits"])
     },
     methods: {
-      ...mapMutations(["changeActionsCount", "changeTimeInterval"])
+      ...mapMutations(["changeActionsCount", "changeTimeInterval"]),
+      ...mapActions(["fetchLimits"])
+    },
+    mounted() {
+      this.fetchLimits();
     }
   }
 </script>

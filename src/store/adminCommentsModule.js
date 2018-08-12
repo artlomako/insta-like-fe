@@ -6,21 +6,24 @@ export default {
   state: {
     synchronized: true,
     settings: {
-      minActionsCount: 0,
-      maxActionsCount: 50,
-      serviceId: 777,
+      limits: {
+        minActionsCount: 0,
+        maxActionsCount: 50,
+      },
       defaultComments: []
     },
     nextCommentId: 0
   },
   mutations: {
-    changeSettings(state, payload) {
-      const {fromApi, ...data} = payload;
-      if (data.defaultComments) {
-        data.defaultComments = data.defaultComments.map((v, i) => ({text: v, id: i}));
-      }
-      state.settings = {...state.settings, ...data};
-      state.synchronized = !!fromApi;
+    changeLimits(state, limits) {
+      state.settings.limits = {...state.settings.limits, ...limits};
+      state.synchronized = false;
+    },
+    changeSettings(state, settings) {
+      settings.defaultComments = settings.defaultComments.map((v, i) => ({text: v, id: i}));
+      state.nextCommentId = settings.defaultComments.length;
+      state.settings = settings;
+      state.synchronized = true;
     },
     addComment(state, newComment) {
       state.settings.defaultComments.push({text: newComment, id: state.nextCommentId++});
@@ -28,10 +31,6 @@ export default {
     },
     deleteComment(state, comment) {
       state.settings.defaultComments = state.settings.defaultComments.filter(c => c.id !== comment.id);
-      state.synchronized = false;
-    },
-    changeServiceId(state, serviceId) {
-      state.settings.serviceId = parseInt(serviceId);
       state.synchronized = false;
     }
   },
@@ -43,7 +42,7 @@ export default {
         return;
       }
       const data = await fetchResult.json();
-      context.commit("changeSettings", {...data, fromApi: true});
+      context.commit("changeSettings", data);
     },
     async submit(context) {
       const settings = context.state.settings;

@@ -30,7 +30,7 @@ export const accessDenied = () => {
 };
 
 export const apiUnavailable = () => {
-  callback({
+  emit({
     text: "Brak połączenia z serwisem",
     icon: "warning.svg"
   });

@@ -6,15 +6,25 @@ export default {
   state: {
     synchronized: true,
     settings: {
-      minActionsCount: 0,
-      maxActionsCount: 50
+      limits: {
+        minActionsCount: 0,
+        maxActionsCount: 50,
+      },
+      serviceId: ""
     }
   },
   mutations: {
-    changeSettings(state, payload) {
-      const {fromApi, ...newSettings} = payload;
-      state.settings = {...state.settings, ...newSettings};
-      state.synchronized = !!fromApi;
+    changeLimits(state, limits) {
+      state.settings.limits = {...state.settings.limits, ...limits};
+      state.synchronized = false;
+    },
+    changeSettings(state, settings) {
+      state.settings = settings;
+      state.synchronized = true;
+    },
+    changeServiceId(state, serviceId) {
+      state.settings.serviceId = serviceId;
+      state.synchronized = false;
     }
   },
   actions: {
@@ -25,11 +35,11 @@ export default {
         router.push("/admin/login");
         return;
       }
-      const data = await fetchResult.json();
-      context.commit("changeSettings", {...data, fromApi: true});
+      const result = await fetchResult.json();
+      context.commit("changeSettings", result);
     },
     async submit(context) {
-      return await apiSubmitSettings({...context.state.settings});
+      return await apiSubmitSettings(context.state.settings);
     }
   }
 }
