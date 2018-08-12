@@ -29,21 +29,10 @@ export default {
     },
     async start(context, photoUrl) {
       const response = await apiStart(photoUrl, context.state.actionsCount);
-      switch (response.status) {
-        case 403:
-          messageBus.accessDenied();
-          break;
-        case 409:
-          messageBus.alreadyProcessing();
-          break;
-        case 503:
-          messageBus.apiUnavailable();
-          break;
-        case 202:
-          messageBus.likesStarted();
-          break;
-        default:
-          messageBus.error();
+      if (response.status === 202) {
+        messageBus.likesStarted();
+      } else {
+        return response.status;
       }
     }
   }

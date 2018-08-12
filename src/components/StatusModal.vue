@@ -7,7 +7,7 @@
 <script>
   import VModal from "./common/VModal";
   import VList from "./common/VList";
-  import {fetchLikesStatus} from "../api/worker";
+  import {fetchLikesStatus, fetchCommentsStatus} from "../api/worker";
   import {mapGetters} from "vuex";
 
   export default {
@@ -15,6 +15,9 @@
     mounted() {
       if (this.workerMode === "LIKES") {
         fetchLikesStatus().then(response => response.json()).then(data => this.processes = data);
+      }
+      if (this.workerMode === "COMMENTS") {
+        fetchCommentsStatus().then(response => response.json()).then(data => this.processes = data);
       }
     },
     data() {

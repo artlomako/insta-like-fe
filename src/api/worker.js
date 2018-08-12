@@ -18,12 +18,29 @@ export const fetchLikesStatus = () => (
     })
 );
 
+export const fetchCommentsStatus = () => (
+    fetch(root + "/status/comments", {
+      method: "GET",
+      credentials,
+      headers: headers()
+    })
+);
+
 export const startLikes = (photoUrl, actionsCount) => (
     fetch(root + "/start/likes", {
       method: "POST",
       credentials,
       headers: headers(),
       body: JSON.stringify({photoUrl, actionsCount})
+    })
+);
+
+export const startComments = (data) => (
+    fetch(root + "/start/comments", {
+      method: "POST",
+      credentials,
+      headers: headers(),
+      body: JSON.stringify(data)
     })
 );
 

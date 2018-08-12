@@ -36,7 +36,7 @@ export default {
     }
   },
   actions: {
-    start(context) {
+    async start(context) {
       const photoUrl = context.state.photoUrl;
       if (photoUrl.length === 0) {
         messageBus.emptyPhotoUrl();
@@ -47,7 +47,22 @@ export default {
         return;
       }
       const action = context.getters.mode.toLowerCase() + "/start";
-      context.dispatch(action, photoUrl);
+      const responseCode = await context.dispatch(action, photoUrl);
+      if (responseCode) {
+        switch (responseCode) {
+          case 403:
+            messageBus.accessDenied();
+            break;
+          case 409:
+            messageBus.alreadyProcessing();
+            break;
+          case 503:
+            messageBus.apiUnavailable();
+            break;
+          default:
+            messageBus.error();
+        }
+      }
     }
   }
 };

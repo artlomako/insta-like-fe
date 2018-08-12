@@ -1,5 +1,5 @@
 import * as messageBus from "../messageBus";
-import {fetchCommentsLimits as apiFetchLimits} from "../api/worker";
+import {fetchCommentsLimits as apiFetchLimits, startComments as apiStart} from "../api/worker";
 
 export default {
   namespaced: true,
@@ -10,8 +10,8 @@ export default {
       id: undefined,
       text: ""
     },
-    actionsCount: 50,
     timeInterval: 0,
+    actionsCount: 50,
     limits: {
       minActionsCount: 0,
       maxActionsCount: 50,
@@ -83,11 +83,17 @@ export default {
       }
       context.commit("deleteComment", comment);
     },
-    start(context) {
+    async start(context, photoUrl) {
       if (context.state.items.length === 0) {
         messageBus.noComments();
       } else {
-        messageBus.commentsStarted();
+        const {items, actionsCount, timeInterval} = context.state;
+        const response = await apiStart({photoUrl, comments: items.map(c => c.text), actionsCount, timeInterval});
+        if (response.status === 202) {
+          messageBus.commentsStarted();
+        } else {
+          return response.status;
+        }
       }
     },
     async fetchLimits(context) {
