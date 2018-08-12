@@ -2,8 +2,6 @@ import comments from "./workerCommentsModule";
 import likes from "./workerLikesModule";
 import * as messageBus from "../messageBus";
 
-const MODES = ["LIKES", "COMMENTS"];
-
 export default {
   namespaced: true,
   modules: {
@@ -13,11 +11,9 @@ export default {
   state: {
     photoUrl: "",
     modeIdx: 0,
+    mode: "LIKES"
   },
   getters: {
-    mode(state) {
-      return MODES[state.modeIdx];
-    },
     photoUrlValid({photoUrl}) {
       return (
           photoUrl.trim().length === 0 ||
@@ -28,8 +24,8 @@ export default {
     }
   },
   mutations: {
-    nextMode(state) {
-      state.modeIdx = ++state.modeIdx % MODES.length;
+    changeMode(state, mode) {
+      state.mode = mode;
     },
     changePhotoUrl(state, newUrl) {
       state.photoUrl = newUrl;
@@ -46,7 +42,7 @@ export default {
         messageBus.invalidPhotoUrl();
         return;
       }
-      const action = context.getters.mode.toLowerCase() + "/start";
+      const action = context.state.mode.toLowerCase() + "/start";
       const responseCode = await context.dispatch(action, photoUrl);
       if (responseCode) {
         switch (responseCode) {

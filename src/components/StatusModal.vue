@@ -8,7 +8,7 @@
   import VModal from "./common/VModal";
   import VList from "./common/VList";
   import {fetchLikesStatus, fetchCommentsStatus} from "../api/worker";
-  import {mapGetters} from "vuex";
+  import {mapState} from "vuex";
 
   export default {
     name: "StatusModal",
@@ -26,11 +26,11 @@
       }
     },
     computed: {
-      ...mapGetters("worker", {workerMode: "mode"}),
+      ...mapState("worker", {workerMode: "mode"}),
       listData() {
         return this.processes.map(process => ({
           id: process.hash,
-          text: process.url + "<br/>" + this.remainingText(process)
+          text: process.url + "<br/><strong>" + this.remainingText(process) + "</strong>"
         }));
       },
       title() {
@@ -46,8 +46,7 @@
         if (!process.remaining) {
           return "Zakończono";
         }
-        let text = "Pozostało " + process.remaining + " " + this.modeIcon;
-        return "<strong>" + text + "</strong>";
+        return "Pozostało " + process.remaining + " " + this.modeIcon;
       },
       goBack() {
         const path = this.$router.currentRoute.path;

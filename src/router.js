@@ -26,6 +26,7 @@ const router = new Router({
   routes: [
     {
       path: "/",
+      redirect: "/" + store.state.worker.mode.toLowerCase(),
       component: Home,
       children: [
         {
