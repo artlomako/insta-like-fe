@@ -3,6 +3,7 @@ import users from "./adminUsersModule";
 import comments from "./adminCommentsModule";
 import router from "../router";
 import {authorizationError} from "../messageBus";
+import {authenticateAdmin as apiAuthenticate} from "../api/settings";
 
 export default {
   namespaced: true,
@@ -55,12 +56,7 @@ export default {
       if (!password) {
         password = context.state.authentication.password;
       }
-      return fetch("http://localhost:3000/api/authenticate", {
-        method: "POST", headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({password})
-      }).then(r => {
+      return apiAuthenticate(password).then(r => {
         if (r.status === 200) {
           context.commit("setAuthentication", {
             password,

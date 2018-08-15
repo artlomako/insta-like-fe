@@ -63,3 +63,12 @@ export const submitComments = (settings) => (
       body: JSON.stringify(settings)
     })
 );
+
+export const authenticateAdmin = (password) => (
+    fetch(root + "/authenticate", {
+      method: "POST", headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({password})
+    })
+);
