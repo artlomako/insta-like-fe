@@ -1,11 +1,20 @@
 <template>
   <div class="likes-view">
     <v-slider
+      class="likes-view__slider"
       title="Liczba akcji:"
       :min="limits.minActionsCount"
       :max="limits.maxActionsCount"
       :value="actionsCount"
       @change="changeActionsCount"
+    />
+    <v-slider
+      class="likes-view__slider"
+      title="Odstęp czasowy (min):"
+      :min="limits.minTimeInterval"
+      :max="limits.maxTimeInterval"
+      :value="timeInterval"
+      @change="changeTimeInterval"
     />
     <router-view/>
   </div>
@@ -23,10 +32,10 @@
       VSlider
     },
     computed: {
-      ...mapState(["actionsCount", "limits"])
+      ...mapState(["actionsCount", "timeInterval", "limits"])
     },
     methods: {
-      ...mapMutations(["changeActionsCount"]),
+      ...mapMutations(["changeActionsCount", "changeTimeInterval"]),
       ...mapActions(["fetchLimits"])
     },
     mounted() {
@@ -38,6 +47,10 @@
 <style>
   .likes-view {
     width: 100%;
+  }
+
+  .likes-view__slider {
+    margin-bottom: 0.3rem;
   }
 </style>
 

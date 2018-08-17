@@ -16,14 +16,14 @@
     />
     <v-slider
       class="admin-comments__control"
-      title="Minimalny odstęp czasu:"
+      title="Minimalny odstęp czasu (sek):"
       :max="9999"
       :value="settings.limits.minTimeInterval"
       @change="minTimeInterval => changeLimits({minTimeInterval})"
     />
     <v-slider
       class="admin-comments__control"
-      title="Maksymalny odstęp czasu:"
+      title="Maksymalny odstęp czasu (sek):"
       :max="9999"
       :value="settings.limits.maxTimeInterval"
       @change="maxTimeInterval => changeLimits({maxTimeInterval})"

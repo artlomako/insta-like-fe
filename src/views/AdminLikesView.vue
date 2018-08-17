@@ -21,6 +21,20 @@
       :value="settings.limits.maxActionsCount"
       @change="maxActionsCount => changeLimits({maxActionsCount})"
     />
+    <v-slider
+      class="admin-likes__control"
+      title="Minimalny odstęp czasu (min):"
+      :max="9999"
+      :value="settings.limits.minTimeInterval"
+      @change="minTimeInterval => changeLimits({minTimeInterval})"
+    />
+    <v-slider
+      class="admin-likes__control"
+      title="Maksymalny odstęp czasu (min):"
+      :max="9999"
+      :value="settings.limits.maxTimeInterval"
+      @change="maxTimeInterval => changeLimits({maxTimeInterval})"
+    />
   </div>
 </template>
 

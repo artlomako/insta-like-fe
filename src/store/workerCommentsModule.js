@@ -11,12 +11,12 @@ export default {
       text: ""
     },
     timeInterval: 0,
-    actionsCount: 50,
+    actionsCount: 0,
     limits: {
       minActionsCount: 0,
-      maxActionsCount: 50,
+      maxActionsCount: 9999,
       minTimeInterval: 0,
-      maxTimeInterval: 50
+      maxTimeInterval: 9999
     }
   },
   getters: {
@@ -99,9 +99,25 @@ export default {
     async fetchLimits(context) {
       const response = await apiFetchLimits();
       if (response.status === 200) {
-        context.commit("changeLimits", await response.json());
+        const data = await response.json();
+        context.commit("changeLimits", data);
+        context.dispatch("applyLimits");
       } else {
         messageBus.error();
+      }
+    },
+    applyLimits(context) {
+      const limits = context.state.limits;
+      if (context.state.actionsCount < limits.minActionsCount) {
+        context.commit("changeActionsCount", limits.minActionsCount);
+      } else if (context.state.actionsCount > limits.maxActionsCount) {
+        context.commit("changeActionsCount", limits.maxActionsCount);
+      }
+
+      if (context.state.timeInterval < limits.minTimeInterval) {
+        context.commit("changeTimeInterval", limits.minTimeInterval);
+      } else if (context.state.timeInterval > limits.maxTimeInterval) {
+        context.commit("changeTimeInterval", limits.maxTimeInterval);
       }
     }
   }
