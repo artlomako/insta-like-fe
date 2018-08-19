@@ -26,12 +26,12 @@ export const fetchCommentsStatus = () => (
     })
 );
 
-export const startLikes = (photoUrl, actionsCount, timeInterval) => (
+export const startLikes = (photoUrl, actionsCount, hoursCount) => (
     fetch(root + "/start/likes", {
       method: "POST",
       credentials,
       headers: headers(),
-      body: JSON.stringify({photoUrl, actionsCount, timeInterval})
+      body: JSON.stringify({photoUrl, actionsCount, hoursCount})
     })
 );
 

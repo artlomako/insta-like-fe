@@ -9,8 +9,7 @@ export default {
       limits: {
         minActionsCount: 0,
         maxActionsCount: 50,
-        minTimeInterval: 0,
-        maxTimeInterval: 50
+        maxHoursCount: 50
       },
       serviceId: ""
     }

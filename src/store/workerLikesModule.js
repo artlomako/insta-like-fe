@@ -5,12 +5,16 @@ export default {
   namespaced: true,
   state: {
     actionsCount: 0,
-    timeInterval: 0,
+    hoursCount: 0,
     limits: {
       minActionsCount: 0,
       maxActionsCount: 9999,
-      minTimeInterval: 0,
-      maxTimeInterval: 9999
+      maxHoursCount: 24
+    }
+  },
+  getters: {
+    maxHoursCount(state) {
+      return Math.min(state.limits.maxHoursCount, Math.floor(state.actionsCount / 50));
     }
   },
   mutations: {
@@ -20,8 +24,8 @@ export default {
     changeLimits(state, limits) {
       state.limits = limits;
     },
-    changeTimeInterval(state, timeInterval) {
-      state.timeInterval = timeInterval;
+    changeHoursCount(state, hoursCount) {
+      state.hoursCount = hoursCount;
     }
   },
   actions: {
@@ -36,7 +40,7 @@ export default {
       }
     },
     async start(context, photoUrl) {
-      const response = await apiStart(photoUrl, context.state.actionsCount, context.state.timeInterval);
+      const response = await apiStart(photoUrl, context.state.actionsCount, context.state.hoursCount);
       if (response.status === 202) {
         messageBus.likesStarted();
       } else {
@@ -49,12 +53,6 @@ export default {
         context.commit("changeActionsCount", limits.minActionsCount);
       } else if (context.state.actionsCount > limits.maxActionsCount) {
         context.commit("changeActionsCount", limits.maxActionsCount);
-      }
-
-      if (context.state.timeInterval < limits.minTimeInterval) {
-        context.commit("changeTimeInterval", limits.minTimeInterval);
-      } else if (context.state.timeInterval > limits.maxTimeInterval) {
-        context.commit("changeTimeInterval", limits.maxTimeInterval);
       }
     }
   }

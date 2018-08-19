@@ -10,11 +10,10 @@
     />
     <v-slider
       class="likes-view__slider"
-      title="Odstęp czasowy (min):"
-      :min="limits.minTimeInterval"
-      :max="limits.maxTimeInterval"
-      :value="timeInterval"
-      @change="changeTimeInterval"
+      title="Przez ile godzin dodawać:"
+      :max="maxHoursCount"
+      :value="hoursCount"
+      @change="changeHoursCount"
     />
     <router-view/>
   </div>
@@ -24,7 +23,7 @@
   import VSlider from "@/components/common/VSlider";
   import {createNamespacedHelpers} from "vuex";
 
-  const {mapState, mapMutations, mapActions} = createNamespacedHelpers("worker/likes");
+  const {mapState, mapMutations, mapActions, mapGetters} = createNamespacedHelpers("worker/likes");
 
   export default {
     name: "LikesView",
@@ -32,10 +31,11 @@
       VSlider
     },
     computed: {
-      ...mapState(["actionsCount", "timeInterval", "limits"])
+      ...mapState(["actionsCount", "hoursCount", "limits"]),
+      ...mapGetters(["maxHoursCount"])
     },
     methods: {
-      ...mapMutations(["changeActionsCount", "changeTimeInterval"]),
+      ...mapMutations(["changeActionsCount", "changeHoursCount"]),
       ...mapActions(["fetchLimits"])
     },
     mounted() {
