@@ -31,14 +31,6 @@
         type: Number,
       }
     },
-    mounted() {
-      if (this.value < this.min) {
-        this.$emit("change", this.min);
-      }
-      if (this.value > this.max) {
-        this.$emit("change", this.max);
-      }
-    },
     data() {
       return {localValue: this.value}
     },
@@ -59,6 +51,16 @@
     watch: {
       value(newVal) {
         this.localValue = newVal;
+      },
+      min(min) {
+        if (this.localValue < min) {
+          this.$emit("change", min);
+        }
+      },
+      max(max) {
+        if (this.localValue > max) {
+          this.$emit("change", max);
+        }
       }
     }
   }
