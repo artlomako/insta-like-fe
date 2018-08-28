@@ -11,7 +11,7 @@ const headers = () => ({
 });
 
 export const fetchLikesStatus = () => (
-    fetch(root + "/status/likes", {
+    fetch(root + "/likes/status", {
       method: "GET",
       credentials,
       headers: headers()
@@ -19,7 +19,7 @@ export const fetchLikesStatus = () => (
 );
 
 export const fetchCommentsStatus = () => (
-    fetch(root + "/status/comments", {
+    fetch(root + "/comments/status", {
       method: "GET",
       credentials,
       headers: headers()
@@ -27,7 +27,7 @@ export const fetchCommentsStatus = () => (
 );
 
 export const startLikes = (photoUrl, actionsCount, hoursCount) => (
-    fetch(root + "/start/likes", {
+    fetch(root + "/likes/start", {
       method: "POST",
       credentials,
       headers: headers(),
@@ -36,7 +36,7 @@ export const startLikes = (photoUrl, actionsCount, hoursCount) => (
 );
 
 export const startComments = (data) => (
-    fetch(root + "/start/comments", {
+    fetch(root + "/comments/start", {
       method: "POST",
       credentials,
       headers: headers(),
@@ -45,14 +45,14 @@ export const startComments = (data) => (
 );
 
 export const fetchLikesLimits = () => (
-    fetch(root + "/limits/likes", {
+    fetch(root + "/likes/limits", {
       method: "GET",
       credentials,
       headers: headers()
     })
 );
 export const fetchCommentsLimits = () => (
-    fetch(root + "/limits/comments", {
+    fetch(root + "/comments/limits", {
       method: "GET",
       credentials,
       headers: headers()
@@ -60,7 +60,7 @@ export const fetchCommentsLimits = () => (
 );
 
 export const fetchDefaultComments = () => (
-    fetch(root + "/default-comments", {
+    fetch(root + "/comments/default", {
       method: "GET",
       credentials,
       headers: headers()

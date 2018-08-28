@@ -35,7 +35,7 @@
       },
       title() {
         const suffix = this.workerMode === "LIKES" ? "polubień" : "komentarzy";
-        return "Status " + suffix;
+        return "Status " + suffix ;
       },
       modeIcon() {
         return this.workerMode === "LIKES" ? "\uD83D\uDC4D" : "\uD83D\uDCAC";
@@ -43,10 +43,15 @@
     },
     methods: {
       remainingText(process) {
-        if (!process.remaining) {
-          return "Zakończono";
+        if (this.workerMode === "LIKES") {
+          return process.completed ? "Zakończono" : "W trakcie";
         }
-        return "Pozostało " + process.remaining + " " + this.modeIcon;
+        if (this.workerMode === "COMMENTS") {
+          if (!process.remaining) {
+            return "Zakończono";
+          }
+          return "Pozostało " + process.remaining + " " + this.modeIcon;
+        }
       },
       goBack() {
         const path = this.$router.currentRoute.path;
