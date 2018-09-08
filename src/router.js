@@ -9,6 +9,7 @@ import CommentsView from "./views/CommentsView";
 import AdminLoginView from "./views/AdminLoginView";
 import AdminUsersView from "./views/AdminUsersView";
 import AdminCommentsView from "./views/AdminCommentsView";
+import HowToView from "./views/HowToView";
 import store from "./store";
 
 Vue.use(Router);
@@ -76,6 +77,10 @@ const router = new Router({
     {
       path: "/admin/login",
       component: AdminLoginView
+    },
+    {
+      path: "/how-to",
+      component: HowToView
     }
   ]
 });
