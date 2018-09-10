@@ -9,7 +9,8 @@ export default {
       limits: {
         minActionsCount: 0,
         maxActionsCount: 50,
-        maxHoursCount: 50
+        maxHoursCount: 50,
+        dailyLimit: 50
       },
       serviceId: ""
     }

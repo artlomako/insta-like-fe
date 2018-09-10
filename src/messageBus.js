@@ -84,3 +84,10 @@ export const authorizationError = () => {
     icon: "warning.svg"
   });
 };
+
+export const dailyLimitExceeded = () => {
+  emit({
+    text: "Wykorzystałeś swój dzienny limit lajków",
+    icon: "warning.svg"
+  });
+};

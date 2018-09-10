@@ -43,6 +43,9 @@ export default {
       const response = await apiStart(photoUrl, context.state.actionsCount, context.state.hoursCount);
       if (response.status === 202) {
         messageBus.likesStarted();
+        context.dispatch("fetchLimits");
+      } else if (response.status === 400) {
+        messageBus.dailyLimitExceeded();
       } else {
         return response.status;
       }

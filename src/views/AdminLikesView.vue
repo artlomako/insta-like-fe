@@ -10,16 +10,25 @@
     <v-slider
       class="admin-likes__control"
       title="Minimalna liczba polubień:"
-      :max="9999"
+      :max="settings.limits.maxActionsCount"
       :value="settings.limits.minActionsCount"
       @change="minActionsCount => changeLimits({minActionsCount})"
     />
     <v-slider
       class="admin-likes__control"
       title="Maksymalna liczba polubień:"
+      :min="settings.limits.minActionsCount"
       :max="9999"
       :value="settings.limits.maxActionsCount"
       @change="maxActionsCount => changeLimits({maxActionsCount})"
+    />
+    <v-slider
+      class="admin-likes__control"
+      title="Maksymalna liczba polubień na dobę:"
+      :min="settings.limits.maxActionsCount"
+      :max="9999"
+      :value="settings.limits.dailyLimit"
+      @change="dailyLimit => changeLimits({dailyLimit})"
     />
     <v-slider
       class="admin-likes__control"
