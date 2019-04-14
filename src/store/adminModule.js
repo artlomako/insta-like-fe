@@ -1,16 +1,18 @@
 import likes from "./adminLikesModule";
 import users from "./adminUsersModule";
 import comments from "./adminCommentsModule";
+import lock from "./adminLockModule";
 import router from "../router";
-import {authorizationError} from "../messageBus";
-import {authenticateAdmin as apiAuthenticate} from "../api/settings";
+import { authorizationError } from "../messageBus";
+import { authenticateAdmin as apiAuthenticate } from "../api/settings";
 
 export default {
   namespaced: true,
   modules: {
     likes,
     users,
-    comments
+    comments,
+    lock
   },
   state: {
     authentication: {
@@ -71,6 +73,6 @@ export default {
           return false;
         }
       });
-    },
+    }
   }
 };

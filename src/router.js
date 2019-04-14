@@ -9,6 +9,8 @@ import CommentsView from "./views/CommentsView";
 import AdminLoginView from "./views/AdminLoginView";
 import AdminUsersView from "./views/AdminUsersView";
 import AdminCommentsView from "./views/AdminCommentsView";
+import AdminServiceLockView from "./views/AdminServiceLockView";
+import ServiceLockedView from "./views/ServiceLockedView";
 import HowToView from "./views/HowToView";
 import store from "./store";
 
@@ -71,6 +73,11 @@ const router = new Router({
           path: "comments",
           component: AdminCommentsView,
           beforeEnter: securityCheck
+        },
+        {
+          path: "lock",
+          component: AdminServiceLockView,
+          beforeEnter: securityCheck
         }
       ]
     },
@@ -81,6 +88,10 @@ const router = new Router({
     {
       path: "/how-to",
       component: HowToView
+    },
+    {
+      path: "/service-locked",
+      component: ServiceLockedView
     }
   ]
 });
