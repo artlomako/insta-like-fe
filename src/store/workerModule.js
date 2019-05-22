@@ -9,17 +9,18 @@ export default {
     likes
   },
   state: {
+    fetching: false,
     photoUrl: "",
     modeIdx: 0,
     mode: "LIKES"
   },
   getters: {
-    photoUrlValid({photoUrl}) {
+    photoUrlValid({ photoUrl }) {
       return (
-          photoUrl.trim().length === 0 ||
-          /^(https?:\/\/)?(www\.)?instagram\.com\/.+/.test(
-              photoUrl.trim().toLowerCase()
-          )
+        photoUrl.trim().length === 0 ||
+        /^(https?:\/\/)?(www\.)?instagram\.com\/.+/.test(
+          photoUrl.trim().toLowerCase()
+        )
       );
     }
   },
@@ -29,10 +30,16 @@ export default {
     },
     changePhotoUrl(state, newUrl) {
       state.photoUrl = newUrl;
+    },
+    setFetching(state, fetching) {
+      state.fetching = fetching;
     }
   },
   actions: {
     async start(context) {
+      if (context.state.fetching) {
+        return;
+      }
       const photoUrl = context.state.photoUrl;
       if (photoUrl.length === 0) {
         messageBus.emptyPhotoUrl();
@@ -43,6 +50,7 @@ export default {
         return;
       }
       const action = context.state.mode.toLowerCase() + "/start";
+      context.commit("setFetching", true);
       const responseCode = await context.dispatch(action, photoUrl);
       if (responseCode) {
         switch (responseCode) {
@@ -58,6 +66,7 @@ export default {
           default:
             messageBus.error();
         }
+        context.commit("setFetching", false);
       }
     }
   }
